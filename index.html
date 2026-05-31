@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jain — Labour Market Intelligence Dashboard</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0b1918;
+    color: #e8f4f3;
+    font-family: 'DM Sans', 'Segoe UI', sans-serif;
+    min-height: 100vh;
+  }
+  .header {
+    background: linear-gradient(135deg, #0f2a28 0%, #0b1918 60%, #071412 100%);
+    border-bottom: 1px solid rgba(78,205,196,0.15);
+    padding: 24px 32px 20px;
+  }
+  .header-inner { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .header-label { font-size: 11px; letter-spacing: 0.18em; color: #4ECDC4; text-transform: uppercase; margin-bottom: 6px; font-weight: 600; }
+  .header-title { font-size: 26px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .header-sub { font-size: 13px; color: rgba(255,255,255,0.65); margin-top: 4px; }
+  .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+  .tabs { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .tab {
+    padding: 7px 16px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.12);
+    background: transparent; color: rgba(255,255,255,0.55); font-size: 12px;
+    font-weight: 600; cursor: pointer; text-transform: capitalize; letter-spacing: 0.04em;
+    transition: all 0.15s ease; font-family: inherit;
+  }
+  .tab.active { border-color: #4ECDC4; background: rgba(78,205,196,0.12); color: #4ECDC4; }
+  /* Country filter */
+  .filter-bar { display: flex; align-items: center; gap: 6px; }
+  .filter-label { font-size: 10px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; margin-right: 4px; }
+  .filter-btn {
+    padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.15);
+    background: transparent; color: rgba(255,255,255,0.5); font-size: 11px;
+    font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s ease;
+    letter-spacing: 0.04em;
+  }
+  .filter-btn.active { border-color: #4ECDC4; background: rgba(78,205,196,0.15); color: #4ECDC4; }
+  .main { padding: 24px 32px; max-width: 1100px; margin: 0 auto; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+  .kpi-card {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px; padding: 16px;
+  }
+  .kpi-label { font-size: 10px; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; font-weight: 600; }
+  .kpi-value { font-size: 28px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+  .kpi-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 6px; }
+  .panel {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px; padding: 20px;
+  }
+  .panel-title { font-size: 11px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; font-weight: 700; }
+  .panel-sub { font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 20px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .stat-card {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px; padding: 16px;
+  }
+  .stat-value { font-size: 26px; font-weight: 800; margin-top: 8px; }
+  .stat-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 6px; }
+  .insight-box {
+    background: rgba(78,205,196,0.05); border: 1px solid rgba(78,205,196,0.15);
+    border-radius: 10px; padding: 16px;
+  }
+  .insight-title { font-size: 11px; color: #4ECDC4; font-weight: 700; margin-bottom: 6px; }
+  .insight-text { font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+  .signal-row {
+    display: flex; align-items: flex-start; gap: 12px; padding: 10px 12px;
+    background: rgba(255,255,255,0.025); border-radius: 8px; margin-bottom: 8px;
+  }
+  .signal-row:last-child { margin-bottom: 0; }
+  .signal-content { flex: 1; }
+  .signal-header { display: flex; justify-content: space-between; align-items: center; }
+  .signal-label { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9); }
+  .signal-badge { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; }
+  .signal-val { font-size: 18px; font-weight: 800; margin-top: 3px; }
+  .signal-desc { font-size: 10px; color: rgba(255,255,255,0.5); }
+  .loop-step { font-size: 12px; padding: 7px 12px; border-radius: 6px; margin-bottom: 0; }
+  .loop-arrow { width: 1px; height: 8px; background: rgba(255,107,107,0.3); margin: 0 0 0 16px; }
+  .why-stat { display: flex; align-items: center; gap: 14px; padding: 10px 0; }
+  .why-stat-val { font-size: 22px; font-weight: 800; color: #4ECDC4; min-width: 64px; }
+  .why-stat-label { font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.4; }
+  .market-card {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px; padding: 16px;
+  }
+  .market-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+  .market-name { font-size: 16px; font-weight: 700; }
+  .market-country { font-size: 10px; color: rgba(255,255,255,0.55); margin-top: 2px; font-weight: 500; }
+  .market-risk-badge { font-size: 9px; border-radius: 4px; padding: 3px 6px; font-weight: 700; letter-spacing: 0.06em; }
+  .market-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .market-row:last-child { border-bottom: none; }
+  .market-row-label { font-size: 11px; color: rgba(255,255,255,0.6); font-weight: 500; }
+  .market-row-val { font-size: 12px; font-weight: 600; }
+  .compare-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); align-items: center; }
+  .compare-row:last-child { border-bottom: none; }
+  .footer { margin-top: 24px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+  .footer-sources { font-size: 10px; color: rgba(255,255,255,0.4); }
+  .footer-brand { font-size: 10px; color: rgba(78,205,196,0.5); font-weight: 600; letter-spacing: 0.08em; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+  input[type=range] { width: 100%; accent-color: #4ECDC4; }
+  .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .calc-label { font-size: 11px; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 8px; font-weight: 600; }
+  .calc-val { font-size: 22px; font-weight: 700; color: #4ECDC4; margin-top: 4px; }
+  .result-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .result-card {
+    background: rgba(78,205,196,0.07); border: 1px solid rgba(78,205,196,0.15);
+    border-radius: 10px; padding: 14px;
+  }
+  .result-label { font-size: 10px; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; font-weight: 600; }
+  .result-val { font-size: 24px; font-weight: 800; color: #4ECDC4; }
+  .result-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; }
+  .reason-row { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+  .reason-num {
+    width: 20px; height: 20px; border-radius: 50%; background: rgba(255,107,107,0.15);
+    border: 1px solid rgba(255,107,107,0.3); display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 10px; color: #FF6B6B; font-weight: 700;
+  }
+  .reason-text { font-size: 12px; color: rgba(255,255,255,0.7); line-height: 1.4; }
+  .filter-notice {
+    display: none; background: rgba(247,183,49,0.08); border: 1px solid rgba(247,183,49,0.2);
+    border-radius: 8px; padding: 10px 14px; margin-bottom: 16px;
+    font-size: 12px; color: rgba(247,183,49,0.85);
+  }
+  .filter-notice.visible { display: block; }
+  .machine-btn {
+    padding: 8px 14px; border-radius: 7px; border: 1px solid rgba(255,255,255,0.15);
+    background: transparent; color: rgba(255,255,255,0.55); font-size: 11px;
+    font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s ease;
+    text-align: center; line-height: 1.4;
+  }
+  .machine-btn.active { border-color: #4ECDC4; background: rgba(78,205,196,0.12); color: #4ECDC4; }
+  @media (max-width: 700px) {
+    .kpi-grid { grid-template-columns: 1fr 1fr; }
+    .two-col { grid-template-columns: 1fr; }
+    .three-col { grid-template-columns: 1fr 1fr; }
+    .result-grid { grid-template-columns: 1fr; }
+    .calc-grid { grid-template-columns: 1fr; }
+    .header-right { align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="header-label">Jain — Labour Market Intelligence</div>
+      <h1 class="header-title">Commercial Cleaning Workforce</h1>
+      <div class="header-sub" id="header-sub-text">North America · 2024–2027 · Updated May 2026</div>
+    </div>
+    <div class="header-right">
+      <div class="tabs">
+        <button class="tab active" onclick="switchTab('overview',event)">Overview</button>
+        <button class="tab" onclick="switchTab('wages',event)">Wages</button>
+        <button class="tab" onclick="switchTab('turnover',event)">Turnover</button>
+        <button class="tab" onclick="switchTab('markets',event)">Markets</button>
+        <button class="tab" onclick="switchTab('automation',event)">🤖 Automation ROI</button>
+      </div>
+      <div class="filter-bar">
+        <span class="filter-label">View:</span>
+        <button class="filter-btn active" onclick="setRegion('all',event)">🌎 North America</button>
+        <button class="filter-btn" onclick="setRegion('US',event)">🇺🇸 US Only</button>
+        <button class="filter-btn" onclick="setRegion('CA',event)">🇨🇦 Canada Only</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- Filter notice -->
+  <div class="filter-notice" id="filter-notice"></div>
+
+  <!-- KPI Strip -->
+  <div class="kpi-grid" id="kpi-strip"></div>
+
+  <!-- OVERVIEW TAB -->
+  <div id="tab-overview" class="tab-content active">
+    <div class="two-col">
+      <div class="panel">
+        <div class="panel-title" id="segment-title">Workforce Segments</div>
+        <div style="margin-top:12px;">
+          <svg width="100%" viewBox="0 0 380 160" id="donut-svg"></svg>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Key Market Signals</div>
+        <div style="margin-top:12px;" id="signals"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WAGES TAB -->
+  <div id="tab-wages" class="tab-content">
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="panel">
+        <div class="panel-title">Wage Trends 2019–2027</div>
+        <div class="panel-sub" id="wage-chart-sub">US median hourly wage (SOC 37-2011) vs. Toronto union rate (SEIU Local 2 CBA)</div>
+        <svg width="100%" viewBox="0 0 580 200" id="wage-chart" style="overflow:visible;"></svg>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;" id="wage-stats"></div>
+      <div class="insight-box">
+        <div class="insight-title">⚡ The Minimum Wage Ratchet Effect</div>
+        <div class="insight-text">When minimum wages rise, the entire wage structure shifts — not just entry-level pay. Workers with experience push to restore their differential above the new floor. Supervisors push to maintain their premium. A bid priced at today's wages, covering a contract that spans a scheduled minimum wage increase, carries hidden cost exposure that most BSCs do not model.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TURNOVER TAB -->
+  <div id="tab-turnover" class="tab-content">
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="panel">
+        <div class="panel-title">Turnover Cost Calculator</div>
+        <div class="panel-sub">Adjust team size and replacement cost to reveal the hidden P&amp;L impact</div>
+        <div class="calc-grid">
+          <div>
+            <label class="calc-label">Team Size</label>
+            <input type="range" min="10" max="500" step="10" value="50" id="workers-slider" oninput="updateCalc()">
+            <div class="calc-val" id="workers-display">50 workers</div>
+          </div>
+          <div>
+            <label class="calc-label">Cost Per Replacement</label>
+            <input type="range" min="500" max="5000" step="250" value="2000" id="cost-slider" oninput="updateCalc()">
+            <div class="calc-val" id="cost-display">$2,000</div>
+          </div>
+        </div>
+        <div class="result-grid">
+          <div class="result-card">
+            <div class="result-label">Annual Replacements</div>
+            <div class="result-val" id="replacements">100</div>
+            <div class="result-sub">at 200% turnover</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">Hidden Annual Cost</div>
+            <div class="result-val" id="total-cost">$200K</div>
+            <div class="result-sub">not in your P&amp;L</div>
+          </div>
+          <div class="result-card">
+            <div class="result-label">% of Labour Revenue</div>
+            <div class="result-val" id="pct-revenue">11%</div>
+            <div class="result-sub">eroded by turnover</div>
+          </div>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-title" style="margin-bottom:14px;">Why Cleaners Leave</div>
+          <div id="reasons"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title" style="margin-bottom:14px;">The Compounding Loop</div>
+          <div id="loop"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARKETS TAB -->
+  <div id="tab-markets" class="tab-content">
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div id="market-cards-wrap"></div>
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-title" style="margin-bottom:14px;">🇺🇸 US vs 🇨🇦 Canada</div>
+          <div id="compare-table"></div>
+        </div>
+        <div style="background:rgba(78,205,196,0.05);border:1px solid rgba(78,205,196,0.2);border-radius:12px;padding:20px;">
+          <div style="font-size:11px;color:#4ECDC4;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;">The Jain Opportunity</div>
+          <div id="why-jain"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AUTOMATION TAB -->
+  <div id="tab-automation" class="tab-content">
+    <div style="display:flex;flex-direction:column;gap:16px;">
+
+      <!-- KPI strip for automation -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+        <div class="kpi-card" style="border-top:2px solid #4ECDC4;">
+          <div class="kpi-label">Floor-Cleaning Robot Market (2024)</div>
+          <div class="kpi-value" style="color:#4ECDC4;">$2.95B</div>
+          <div class="kpi-sub">Floor segment of $5.98B total · growing to $21B by 2030 · 23.7% CAGR</div>
+        </div>
+        <div class="kpi-card" style="border-top:2px solid #4ECDC4;">
+          <div class="kpi-label">Typical Payback Period</div>
+          <div class="kpi-value" style="color:#4ECDC4;">9–18 mo</div>
+          <div class="kpi-sub">Daily-use sites · 50K+ sq ft hard floor</div>
+        </div>
+        <div class="kpi-card" style="border-top:2px solid #F7B731;">
+          <div class="kpi-label">Labour Offset Per Machine</div>
+          <div class="kpi-value" style="color:#F7B731;">~1 FTE</div>
+          <div class="kpi-sub">Large open floor coverage · 2 shifts/day</div>
+        </div>
+        <div class="kpi-card" style="border-top:2px solid #FF6B6B;">
+          <div class="kpi-label">Annual Machine Opex</div>
+          <div class="kpi-value" style="color:#FF6B6B;">$4–7K</div>
+          <div class="kpi-sub">Consumables · maintenance · software</div>
+        </div>
+      </div>
+
+      <!-- Two column: calculator + suitability -->
+      <div class="two-col">
+
+        <!-- ROI CALCULATOR -->
+        <div class="panel">
+          <div class="panel-title">Machine ROI Calculator</div>
+          <div class="panel-sub">Model the financial impact of adding one autonomous scrubber to a contract</div>
+
+          <div style="display:flex;flex-direction:column;gap:14px;">
+
+            <div>
+              <label class="calc-label">Eligible Hard Floor Area (sq ft)</label>
+              <input type="range" min="10000" max="300000" step="5000" value="80000" id="sqft-slider" oninput="updateAutoCalc()">
+              <div class="calc-val" id="sqft-display">80,000 sq ft</div>
+            </div>
+
+            <div>
+              <label class="calc-label">Loaded Labour Rate ($/hr)</label>
+              <input type="range" min="16" max="40" step="0.50" value="23" id="wage-slider" oninput="updateAutoCalc()">
+              <div class="calc-val" id="wage-display">$23.00/hr</div>
+            </div>
+
+            <div>
+              <label class="calc-label">Machine Class</label>
+              <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;">
+                <button class="machine-btn active" data-group="machine" onclick="setMachine('compact',this)">Compact<br><span style="font-size:10px;font-weight:400;">$27,500 · 30–50K sq ft</span></button>
+                <button class="machine-btn" data-group="machine" onclick="setMachine('mid',this)">Mid-Size<br><span style="font-size:10px;font-weight:400;">$41,820 · 50–100K sq ft</span></button>
+                <button class="machine-btn" data-group="machine" onclick="setMachine('large',this)">Large-Format<br><span style="font-size:10px;font-weight:400;">$85,000 · 100–200K sq ft</span></button>
+              </div>
+            </div>
+
+            <div>
+              <label class="calc-label">Acquisition Model</label>
+              <div style="display:flex;gap:8px;margin-top:6px;">
+                <button class="machine-btn active" data-group="acq" onclick="setAcqModel('purchase',this)">Purchase</button>
+                <button class="machine-btn" data-group="acq" onclick="setAcqModel('raas',this)">RaaS / Lease</button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Results -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px;" id="auto-results">
+          </div>
+
+          <!-- Eligibility flag -->
+          <div id="eligibility-flag" style="margin-top:12px;padding:10px 14px;border-radius:8px;font-size:12px;display:none;"></div>
+        </div>
+
+        <!-- FACILITY SUITABILITY GUIDE -->
+        <div class="panel">
+          <div class="panel-title">Facility Suitability Guide</div>
+          <div class="panel-sub">Where autonomous scrubbers perform — and where they don't</div>
+          <div id="suitability-table" style="display:flex;flex-direction:column;gap:6px;"></div>
+        </div>
+
+      </div>
+
+      <!-- Machine specs row -->
+      <div class="panel">
+        <div class="panel-title">Machine Specifications — 2026 Reference</div>
+        <div class="panel-sub">Key models currently deployed in commercial BSC contracts</div>
+        <div id="machine-specs" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:4px;"></div>
+      </div>
+
+      <!-- Strategic insight -->
+      <div style="background:rgba(78,205,196,0.05);border:1px solid rgba(78,205,196,0.2);border-radius:12px;padding:20px;">
+        <div style="font-size:11px;color:#4ECDC4;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">⚡ The BSC Machine Inventory Play</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div style="font-size:12px;color:rgba(255,255,255,0.65);line-height:1.7;">
+            A BSC that builds a fleet of 3–5 autonomous scrubbers across their contract portfolio creates a compounding competitive advantage. The machine cost is fixed. The labour cost it replaces grows at 4.2%/yr. Every year the machine operates, the margin advantage widens.
+          </div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.65);line-height:1.7;">
+            Large REIT and property management groups are beginning to <strong style="color:rgba(255,255,255,0.85);">require autonomous cleaning technology</strong> as part of BSC contract specifications. Machine capability is becoming a qualification criterion — not just an efficiency tool.
+          </div>
+        </div>
+        <div style="margin-top:14px;padding:12px 16px;background:rgba(247,183,49,0.07);border:1px solid rgba(247,183,49,0.2);border-radius:8px;">
+          <div style="font-size:11px;color:#F7B731;font-weight:700;margin-bottom:6px;">⚠️ Strategic Watch: SoftBank Robotics Connect</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.6);line-height:1.6;">SoftBank Robotics America launched <strong style="color:rgba(255,255,255,0.8);">SoftBank Robotics Connect</strong> in June 2025 — a fleet management platform giving BSCs visibility across heterogeneous machine fleets from a single dashboard. Their Flagship Facility Services partnership deployed ~100 machines across 15 locations in six months. Connect tracks robot performance and cleaning SOP compliance. This is adjacent to Jain's bid intelligence layer — approaching the same problem from the machine side rather than the labour economics side. Worth monitoring as a potential integration partner or distribution channel.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-sources">Sources: BLS OES, SEIU Local 2, SEIU 32BJ, BSCAI, Aspire, Statistics Canada Job Bank, IRCC, National Immigration Forum, Sproutmation, Tennant, Avidbots, Kärcher, SoftBank Robotics America, Grand View Research · May 2026</div>
+    <div class="footer-brand">JAIN · BUILDING INTELLIGENCE. DRIVING PERFORMANCE.</div>
+  </div>
+</div>
+
+<script>
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let currentRegion = 'all';
+
+// ─── DATA ────────────────────────────────────────────────────────────────────
+const wages = [
+  { year:"2019", us:14.20, ca:15.80 },
+  { year:"2020", us:14.65, ca:16.10 },
+  { year:"2021", us:15.10, ca:16.50 },
+  { year:"2022", us:15.80, ca:17.00 },
+  { year:"2023", us:16.55, ca:17.80 },
+  { year:"2024", us:17.27, ca:18.55 },
+  { year:"2025", us:17.99, ca:19.55, proj:true },
+  { year:"2026", us:18.75, ca:20.35, proj:true },
+  { year:"2027", us:19.60, ca:21.20, proj:true },
+];
+
+const segmentsAll = [
+  { name:"Domestic / Transitioning", pct:32, color:"#95E1D3", region:"all" },
+  { name:"Documented Immigrants", pct:28, color:"#4ECDC4", region:"all" },
+  { name:"Part-Time / Second Job", pct:22, color:"#2EC4B6", region:"all" },
+  { name:"Refugees & New Arrivals", pct:10, color:"#1A9E97", region:"all" },
+  { name:"Undocumented (US)", pct:5, color:"#0D6E68", region:"US" },
+  { name:"Indigenous (Canada)", pct:3, color:"#088F8A", region:"CA" },
+];
+
+const signalsAll = [
+  { label:"Wage Growth Rate", value:"+4.2%/yr", sub:"US national; some states +6.9%", sev:"medium", region:"US" },
+  { label:"Annual Turnover", value:"~200%", sub:"Industry norm; up to 375% in some markets", sev:"high", region:"all" },
+  { label:"Labour Force Loss (US H1 2025)", value:"1.2M", sub:"Foreign-born workers left due to enforcement", sev:"high", region:"US" },
+  { label:"AI Bidding Adoption", value:"<5%", sub:"BSCs using AI for bid modelling — Jain's white space", sev:"opportunity", region:"all" },
+  { label:"Toronto Living Wage Gap", value:"$6.45/hr", sub:"$19.55 union wage vs $26.00 living wage", sev:"medium", region:"CA" },
+  { label:"IoT Investment (BSCs)", value:"62%", sub:"Companies investing in IoT-enabled tools", sev:"medium", region:"all" },
+];
+
+const marketsAll = [
+  { city:"New York City", country:"US", wage:"$20+", union:"Very High", risk:"High", flag:"🇺🇸" },
+  { city:"Los Angeles", country:"US", wage:"$21", union:"Medium", risk:"Very High", flag:"🇺🇸" },
+  { city:"Chicago", country:"US", wage:"$18", union:"Medium", risk:"Medium", flag:"🇺🇸" },
+  { city:"Houston", country:"US", wage:"$15", union:"Low", risk:"Low", flag:"🇺🇸" },
+  { city:"Toronto", country:"CA", wage:"C$19.55", union:"Very High", risk:"Low", flag:"🇨🇦" },
+  { city:"Vancouver", country:"CA", wage:"C$21+", union:"High", risk:"Low", flag:"🇨🇦" },
+];
+
+const kpiData = {
+  all: [
+    { label:"NA Market Size", value:"$78B+", sub:"US $77B + Canada $1.4B (2024)", accent:"#4ECDC4" },
+    { label:"Workers Employed", value:"2.4M+", sub:"US 2.4M + Canada est. (BLS / StatsCan 2024)", accent:"#4ECDC4" },
+    { label:"Annual Openings", value:"351K+", sub:"US replacement demand alone · not growth", accent:"#F7B731" },
+    { label:"Annual Turnover", value:"~200%", sub:"Industry norm · 3.6× national average", accent:"#FF6B6B" },
+  ],
+  US: [
+    { label:"US Market Size", value:"$77B", sub:"2024 · growing to $100B by 2033", accent:"#4ECDC4" },
+    { label:"Workers Employed", value:"2.4M", sub:"Janitors & cleaners (BLS 2024)", accent:"#4ECDC4" },
+    { label:"Annual Openings", value:"351K", sub:"Replacement demand · not growth", accent:"#F7B731" },
+    { label:"Annual Turnover", value:"~200%", sub:"Industry norm · 3.6× national average", accent:"#FF6B6B" },
+  ],
+  CA: [
+    { label:"Canada Market Size", value:"$1.4B", sub:"2024 · growing to $2.1B by 2034", accent:"#F7B731" },
+    { label:"Toronto Union Wage", value:"C$19.55", sub:"SEIU Local 2 CBA · April 2025", accent:"#4ECDC4" },
+    { label:"Living Wage Gap", value:"$6.45/hr", sub:"$19.55 union vs $26.00 living wage (Toronto)", accent:"#FF6B6B" },
+    { label:"Immigration Risk", value:"Low", sub:"No undocumented workforce; stable policy", accent:"#4ECDC4" },
+  ],
+};
+
+const compareRows = [
+  ["Market Size","$77B","$1.4B"],
+  ["Immigration Risk","High / Rising","Low / Stable"],
+  ["Union Density","Patchy (NYC high)","High (Toronto, Van)"],
+  ["Enforcement Risk","Acute (2025)","Minimal"],
+  ["Employer Cost Premium","8–12% above wage","12–18% above wage"],
+  ["AI Bidding Adoption","<5%","<5%"],
+];
+
+const whyJain = [
+  { stat:"<5%", label:"BSCs using AI for bid modelling" },
+  { stat:"62%", label:"BSCs investing in IoT tools" },
+  { stat:"$400K", label:"Hidden turnover cost on 100-person team" },
+  { stat:"4.2%", label:"Annual wage growth outpacing most bids" },
+];
+
+const reasons = [
+  "Isolation & invisibility (night shifts, no supervisor contact)",
+  "No clear expectations at new sites",
+  "Wage competition from logistics & food delivery",
+  "No visible career pathway",
+  "Schedule instability & income unpredictability",
+  "Management communication failures",
+];
+
+const loopSteps = [
+  { text:"High employee turnover", arrow:true, hi:true },
+  { text:"Service inconsistency & quality gaps", arrow:true },
+  { text:"Client dissatisfaction", arrow:true },
+  { text:"Client churn (55%/yr industry avg)", arrow:true },
+  { text:"Revenue pressure on BSC", arrow:true },
+  { text:"Wage suppression to cut costs", arrow:true },
+  { text:"↩ More turnover", arrow:false, hi:true },
+];
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function sevColor(s) { return s==="high"?"#FF6B6B":s==="medium"?"#F7B731":s==="opportunity"?"#4ECDC4":"#aaa"; }
+function sevLabel(s) { return s==="high"?"HIGH RISK":s==="medium"?"MONITOR":s==="opportunity"?"OPPORTUNITY":""; }
+function riskColor(r) { return r==="Very High"?"#FF4444":r==="High"?"#FF6B6B":r==="Medium"?"#F7B731":"#4ECDC4"; }
+
+function filterByRegion(arr) {
+  return arr.filter(d => d.region === 'all' || d.region === currentRegion || currentRegion === 'all');
+}
+
+// ─── REGION FILTER ────────────────────────────────────────────────────────────
+function setRegion(r, e) {
+  currentRegion = r;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  e.target.classList.add('active');
+  // Update header subtitle
+  const labels = { all:"North America · 2024–2027 · Updated May 2026", US:"United States · 2024–2027 · Updated May 2026", CA:"Canada · 2024–2027 · Updated May 2026" };
+  document.getElementById('header-sub-text').textContent = labels[r];
+  // Filter notice
+  const notice = document.getElementById('filter-notice');
+  if (r === 'all') { notice.classList.remove('visible'); }
+  else {
+    notice.textContent = r === 'US'
+      ? '🇺🇸 Showing United States data only. Some panels show North America context where US-specific data is unavailable.'
+      : '🇨🇦 Showing Canada data only. Some panels show North America context where Canada-specific data is unavailable.';
+    notice.classList.add('visible');
+  }
+  renderAll();
+}
+
+// ─── KPI STRIP ───────────────────────────────────────────────────────────────
+function renderKPI() {
+  const data = kpiData[currentRegion];
+  document.getElementById('kpi-strip').innerHTML = data.map(k => `
+    <div class="kpi-card" style="border-top:2px solid ${k.accent};">
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value" style="color:${k.accent};">${k.value}</div>
+      <div class="kpi-sub">${k.sub}</div>
+    </div>`).join('');
+}
+
+// ─── DONUT ────────────────────────────────────────────────────────────────────
+function renderDonut() {
+  const segs = filterByRegion(segmentsAll);
+  const total = segs.reduce((s,d) => s+d.pct, 0);
+  const svg = document.getElementById('donut-svg');
+  const cx=80, cy=80, r=60, inner=36;
+  let cum=0, paths='';
+  segs.forEach(seg => {
+    const sa=(cum/total)*2*Math.PI - Math.PI/2;
+    cum+=seg.pct;
+    const ea=(cum/total)*2*Math.PI - Math.PI/2;
+    const x1=cx+r*Math.cos(sa), y1=cy+r*Math.sin(sa);
+    const x2=cx+r*Math.cos(ea), y2=cy+r*Math.sin(ea);
+    const xi1=cx+inner*Math.cos(sa), yi1=cy+inner*Math.sin(sa);
+    const xi2=cx+inner*Math.cos(ea), yi2=cy+inner*Math.sin(ea);
+    const lg=seg.pct/total>0.5?1:0;
+    paths+=`<path d="M ${xi1} ${yi1} L ${x1} ${y1} A ${r} ${r} 0 ${lg} 1 ${x2} ${y2} L ${xi2} ${yi2} A ${inner} ${inner} 0 ${lg} 0 ${xi1} ${yi1} Z" fill="${seg.color}" stroke="#0b1918" stroke-width="2"/>`;
+  });
+  const centerLabel = currentRegion==='CA' ? ['~190K','CA est.'] : currentRegion==='US' ? ['2.4M','US workers'] : ['2.4M+','NA workers'];
+  paths+=`<text x="${cx}" y="${cy-6}" text-anchor="middle" fill="white" font-size="13" font-weight="700" font-family="DM Sans,sans-serif">${centerLabel[0]}</text>`;
+  paths+=`<text x="${cx}" y="${cy+10}" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="9" font-family="DM Sans,sans-serif">${centerLabel[1]}</text>`;
+  let legX=175, legY=10;
+  segs.forEach((seg,i) => {
+    paths+=`<rect x="${legX}" y="${legY+i*22}" width="8" height="8" rx="2" fill="${seg.color}"/>`;
+    paths+=`<text x="${legX+14}" y="${legY+i*22+8}" fill="rgba(255,255,255,0.65)" font-size="10" font-family="DM Sans,sans-serif">${seg.name} <tspan font-weight="700" fill="rgba(255,255,255,0.9)">${seg.pct}%</tspan></text>`;
+  });
+  svg.innerHTML=paths;
+  document.getElementById('segment-title').textContent =
+    currentRegion==='US' ? 'Workforce Segments (US)' :
+    currentRegion==='CA' ? 'Workforce Segments (Canada)' :
+    'Workforce Segments (North America)';
+}
+
+// ─── SIGNALS ─────────────────────────────────────────────────────────────────
+function renderSignals() {
+  const sigs = filterByRegion(signalsAll);
+  document.getElementById('signals').innerHTML = sigs.map(s=>`
+    <div class="signal-row" style="border-left:3px solid ${sevColor(s.sev)};">
+      <div class="signal-content">
+        <div class="signal-header">
+          <span class="signal-label">${s.label}</span>
+          <span class="signal-badge" style="color:${sevColor(s.sev)}">${sevLabel(s.sev)}</span>
+        </div>
+        <div style="display:flex;align-items:baseline;gap:8px;margin-top:3px;">
+          <span class="signal-val" style="color:${sevColor(s.sev)}">${s.value}</span>
+          <span style="font-size:11px;color:rgba(255,255,255,0.5)">${s.sub}</span>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// ─── WAGE CHART ──────────────────────────────────────────────────────────────
+function renderWageChart() {
+  const showUS = currentRegion !== 'CA';
+  const showCA = currentRegion !== 'US';
+  document.getElementById('wage-chart-sub').textContent =
+    currentRegion==='US' ? 'US median hourly wage (SOC 37-2011) · BLS data' :
+    currentRegion==='CA' ? 'Toronto union wage (SEIU Local 2 CBA) · Canadian data' :
+    'US median hourly wage (SOC 37-2011) vs. Toronto union rate (SEIU Local 2 CBA)';
+
+  const svg=document.getElementById('wage-chart');
+  const W=580, H=200, pl=44, pr=24, pt=16, pb=40;
+  const chartW=W-pl-pr, chartH=H-pt-pb;
+  const allV=wages.flatMap(d=>{let v=[];if(showUS)v.push(d.us);if(showCA)v.push(d.ca);return v;});
+  const minV=Math.min(...allV)-0.5, maxV=Math.max(...allV)+0.5;
+  const n=wages.length;
+  const xS=i=>pl+(i/(n-1))*chartW;
+  const yS=v=>pt+(1-(v-minV)/(maxV-minV))*chartH;
+  const splitIdx=wages.findIndex(d=>d.proj)-1;
+  let html='';
+  [14,16,18,20,22].filter(v=>v>=minV&&v<=maxV).forEach(v=>{
+    html+=`<line x1="${pl}" x2="${W-pr}" y1="${yS(v)}" y2="${yS(v)}" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>`;
+    html+=`<text x="${pl-6}" y="${yS(v)+4}" text-anchor="end" fill="rgba(255,255,255,0.5)" font-size="10" font-family="DM Sans,sans-serif">$${v}</text>`;
+  });
+  wages.forEach((d,i)=>{
+    html+=`<text x="${xS(i)}" y="${H-8}" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10" font-family="DM Sans,sans-serif">${d.year}</text>`;
+  });
+  const projX=xS(splitIdx);
+  html+=`<rect x="${projX}" y="${pt}" width="${xS(n-1)-projX}" height="${chartH}" fill="rgba(255,255,255,0.02)" rx="2"/>`;
+  html+=`<text x="${projX+6}" y="${pt+12}" fill="rgba(255,255,255,0.3)" font-size="9" font-family="DM Sans,sans-serif">PROJECTED</text>`;
+  if(showUS){
+    const usS=wages.slice(0,splitIdx+1).map((d,i)=>`${xS(i)},${yS(d.us)}`).join(' ');
+    const usD=wages.slice(splitIdx).map((d,i)=>`${xS(splitIdx+i)},${yS(d.us)}`).join(' ');
+    html+=`<polyline points="${usS}" fill="none" stroke="#4ECDC4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+    html+=`<polyline points="${usD}" fill="none" stroke="#4ECDC4" stroke-width="2" stroke-dasharray="5,4" stroke-linecap="round"/>`;
+    wages.forEach((d,i)=>{
+      html+=`<circle cx="${xS(i)}" cy="${yS(d.us)}" r="3.5" fill="${d.proj?'#0b1918':'#4ECDC4'}" stroke="#4ECDC4" stroke-width="1.5"/>`;
+    });
+  }
+  if(showCA){
+    const caS=wages.slice(0,splitIdx+1).map((d,i)=>`${xS(i)},${yS(d.ca)}`).join(' ');
+    const caD=wages.slice(splitIdx).map((d,i)=>`${xS(splitIdx+i)},${yS(d.ca)}`).join(' ');
+    html+=`<polyline points="${caS}" fill="none" stroke="#F7B731" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+    html+=`<polyline points="${caD}" fill="none" stroke="#F7B731" stroke-width="2" stroke-dasharray="5,4" stroke-linecap="round"/>`;
+    wages.forEach((d,i)=>{
+      html+=`<circle cx="${xS(i)}" cy="${yS(d.ca)}" r="3.5" fill="${d.proj?'#0b1918':'#F7B731'}" stroke="#F7B731" stroke-width="1.5"/>`;
+    });
+  }
+  let legItems=[];
+  if(showUS) legItems.push({c:'#4ECDC4',label:'US Median (SOC 37-2011)'});
+  if(showCA) legItems.push({c:'#F7B731',label:'Canada Union Wage (SEIU Local 2 CBA)'});
+  let lx=pl+10;
+  legItems.forEach(li=>{
+    html+=`<circle cx="${lx}" cy="${H-22}" r="4" fill="${li.c}"/>`;
+    html+=`<text x="${lx+10}" y="${H-18}" fill="rgba(255,255,255,0.65)" font-size="10" font-family="DM Sans,sans-serif">${li.label}</text>`;
+    lx+=li.label.length*6.5+20;
+  });
+  svg.innerHTML=html;
+
+  // Wage stat cards — always 4 cards in consistent structure:
+  // [1] Current wage level (region-specific)
+  // [2] Wage growth / trajectory (region-specific)
+  // [3] Annual turnover rate (universal — always shown)
+  // [4] Region-specific context card
+  const wageStats = currentRegion==='CA' ? [
+    { label:"Toronto Union Wage (2025)", value:"C$19.55/hr", sub:"SEIU Local 2 CBA · retroactive Apr 2025", color:"#F7B731" },
+    { label:"Wage Trajectory (Toronto)", value:"C$21.55/hr", sub:"Minimum by CBA expiry · +$1.00/hr/yr guaranteed", color:"#F7B731" },
+    { label:"Industry Turnover Rate", value:"~200%/yr", sub:"North America norm · 3.6× national average", color:"#FF6B6B" },
+    { label:"Living Wage Gap (Toronto)", value:"$6.45/hr", sub:"$19.55 union vs $26.00 living wage (2024)", color:"#FF6B6B" },
+  ] : currentRegion==='US' ? [
+    { label:"US Median Wage (2024)", value:"$17.27/hr", sub:"SOC 37-2011 · BLS OES May 2024", color:"#4ECDC4" },
+    { label:"US Wage Growth Rate", value:"+4.2%/yr", sub:"National avg · Arizona +6.9% · projected $19.60 by 2027", color:"#4ECDC4" },
+    { label:"Industry Turnover Rate", value:"~200%/yr", sub:"US norm · costs $300K–$600K/yr on 100-person team", color:"#FF6B6B" },
+    { label:"Added Labour Cost (2027)", value:"+$5,200", sub:"Per worker vs 2024 baseline at current growth rate", color:"#F7B731" },
+  ] : [
+    { label:"US Median Wage (2024)", value:"$17.27/hr", sub:"SOC 37-2011 · projected $19.60/hr by 2027", color:"#4ECDC4" },
+    { label:"Canada Union Wage (2025)", value:"C$19.55/hr", sub:"SEIU Local 2 Toronto CBA · Apr 2025", color:"#F7B731" },
+    { label:"Industry Turnover Rate", value:"~200%/yr", sub:"North America norm · $400K hidden cost on 100-person team", color:"#FF6B6B" },
+    { label:"US Wage Growth Rate", value:"+4.2%/yr", sub:"National avg · some markets +6.9% · entire structure shifts up", color:"#4ECDC4" },
+  ];
+  document.getElementById('wage-stats').innerHTML = wageStats.map(s=>`
+    <div class="stat-card" style="border-top:2px solid ${s.color};">
+      <div class="kpi-label">${s.label}</div>
+      <div class="stat-value" style="color:${s.color};">${s.value}</div>
+      <div class="stat-sub">${s.sub}</div>
+    </div>`).join('');
+}
+
+// ─── TURNOVER (no filter — universal) ────────────────────────────────────────
+function updateCalc() {
+  const workers=+document.getElementById('workers-slider').value;
+  const cost=+document.getElementById('cost-slider').value;
+  const reps=Math.round(workers*2);
+  const total=reps*cost;
+  const pct=((total/(workers*17.27*2080))*100).toFixed(1);
+  document.getElementById('workers-display').textContent=`${workers} workers`;
+  document.getElementById('cost-display').textContent=`$${cost.toLocaleString()}`;
+  document.getElementById('replacements').textContent=reps.toLocaleString();
+  document.getElementById('total-cost').textContent=`$${(total/1000).toFixed(0)}K`;
+  document.getElementById('pct-revenue').textContent=`${pct}%`;
+}
+
+function renderReasons() {
+  document.getElementById('reasons').innerHTML=reasons.map((r,i)=>`
+    <div class="reason-row">
+      <div class="reason-num">${i+1}</div>
+      <div class="reason-text">${r}</div>
+    </div>`).join('');
+}
+
+function renderLoop() {
+  document.getElementById('loop').innerHTML=loopSteps.map(s=>`
+    <div style="display:flex;flex-direction:column;align-items:flex-start;">
+      <div style="font-size:12px;padding:7px 12px;border-radius:6px;width:100%;
+        background:${s.hi?'rgba(255,107,107,0.1)':'rgba(255,255,255,0.03)'};
+        border:1px solid ${s.hi?'rgba(255,107,107,0.25)':'rgba(255,255,255,0.07)'};
+        color:${s.hi?'#FF6B6B':'rgba(255,255,255,0.7)'};
+        font-weight:${s.hi?'700':'400'};">${s.text}</div>
+      ${s.arrow?'<div style="width:1px;height:8px;background:rgba(255,107,107,0.3);margin:0 0 0 16px;"></div>':''}
+    </div>`).join('');
+}
+
+// ─── MARKETS ─────────────────────────────────────────────────────────────────
+function renderMarkets() {
+  const filtered = marketsAll.filter(m => currentRegion==='all' || m.country===currentRegion);
+  const cols = filtered.length <= 3 ? filtered.length : 3;
+  document.getElementById('market-cards-wrap').innerHTML =
+    `<div style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:12px;">` +
+    filtered.map(m=>`
+      <div class="market-card" style="border-top:2px solid ${riskColor(m.risk)};">
+        <div class="market-header">
+          <div>
+            <div class="market-name">${m.flag} ${m.city}</div>
+            <div class="market-country">${m.country==='US'?'United States':'Canada'}</div>
+          </div>
+          <div class="market-risk-badge" style="color:${riskColor(m.risk)};border:1px solid ${riskColor(m.risk)};">${m.risk} RISK</div>
+        </div>
+        <div class="market-row">
+          <span class="market-row-label">Cleaner Wage</span>
+          <span class="market-row-val" style="color:#4ECDC4;">${m.wage}/hr</span>
+        </div>
+        <div class="market-row">
+          <span class="market-row-label">Union Density</span>
+          <span class="market-row-val" style="color:${m.union==='Very High'||m.union==='High'?'#F7B731':'rgba(255,255,255,0.7)'};">${m.union}</span>
+        </div>
+      </div>`).join('') + '</div>';
+
+  // Compare table — always show both countries for context
+  const hdr=`<div class="compare-row" style="border-bottom:1px solid rgba(255,255,255,0.1);">
+    <span style="font-size:10px;color:rgba(255,255,255,0.4);"></span>
+    <span style="font-size:11px;color:rgba(255,255,255,0.6);text-align:center;font-weight:600;">🇺🇸 US</span>
+    <span style="font-size:11px;color:rgba(255,255,255,0.6);text-align:center;font-weight:600;">🇨🇦 Canada</span>
+  </div>`;
+  document.getElementById('compare-table').innerHTML=hdr+compareRows.map(([lbl,us,ca])=>`
+    <div class="compare-row">
+      <span style="font-size:11px;color:rgba(255,255,255,0.6);">${lbl}</span>
+      <span style="font-size:11px;color:${currentRegion==='CA'?'rgba(255,255,255,0.4)':'rgba(255,255,255,0.85)'};text-align:center;font-weight:${currentRegion==='US'?'700':'400'};">${us}</span>
+      <span style="font-size:11px;color:${currentRegion==='US'?'rgba(255,255,255,0.4)':'#F7B731'};text-align:center;font-weight:${currentRegion==='CA'?'700':'400'};">${ca}</span>
+    </div>`).join('');
+
+  document.getElementById('why-jain').innerHTML=whyJain.map((s,i)=>`
+    <div class="why-stat" style="border-bottom:${i<whyJain.length-1?'1px solid rgba(78,205,196,0.1)':'none'};">
+      <div class="why-stat-val">${s.stat}</div>
+      <div class="why-stat-label">${s.label}</div>
+    </div>`).join('');
+}
+
+// ─── AUTOMATION CALCULATOR ────────────────────────────────────────────────────
+const machineClasses = {
+  compact: { name: "Compact", price: 27500, raasPerMonth: 737, maxSqft: 50000, minSqft: 30000, opex: 4500 },
+  mid:     { name: "Mid-Size", price: 41820, raasPerMonth: 1200, maxSqft: 100000, minSqft: 50000, opex: 5500 },
+  large:   { name: "Large-Format", price: 85000, raasPerMonth: 1900, maxSqft: 200000, minSqft: 100000, opex: 6500 },
+};
+
+const suitabilityData = [
+  { type: "Warehouses / Distribution", rating: 5, class: "Large-format", floor: "95–100%", note: "Ideal — 24hr operation" },
+  { type: "Airports / Terminals", rating: 5, class: "Mid or Large", floor: "85–95%", note: "Widely deployed & proven" },
+  { type: "Large Retail / Big-Box", rating: 5, class: "Mid or Large", floor: "90–100%", note: "Overnight ROI proven" },
+  { type: "Convention Centres / Arenas", rating: 5, class: "Large-format", floor: "90–100%", note: "Event-based scheduling" },
+  { type: "Universities / Schools", rating: 4, class: "Compact to Mid", floor: "60–80%", note: "Corridors + common areas" },
+  { type: "Healthcare Facilities", rating: 4, class: "Compact to Mid", floor: "70–85%", note: "High compliance; UV-C add-on" },
+  { type: "Shopping Malls", rating: 4, class: "Mid-size", floor: "80–90%", note: "Common areas only" },
+  { type: "Large Office (common areas)", rating: 3, class: "Compact", floor: "30–50%", note: "Lobbies & corridors only" },
+  { type: "Standard Office Suites", rating: 2, class: "Not recommended", floor: "20–40%", note: "Too much furniture & carpet" },
+  { type: "Restrooms / Elevators", rating: 1, class: "N/A", floor: "N/A", note: "Human cleaning required" },
+];
+
+const machineSpecsData = [
+  { name: "Tennant T7AMR", class: "Mid-Size Scrubber", coverage: "45,760 sq ft/run", path: "26\"", runtime: "3.5 hrs", price: "$85,077", notes: "US-made · BrainOS · LiDAR · unaffected by tariffs" },
+  { name: "CenoBots L50", class: "Large-Format Scrubber", coverage: "150,000 sq ft/2 shifts", path: "32\"", runtime: "Multi-shift", price: "$41,820+", notes: "Singapore-made · tariff-free · proven warehouse ROI" },
+  { name: "Kärcher KIRA B 200", class: "Large-Format Scrubber", coverage: "200,000 sq ft", path: "34\"", runtime: "Extended", price: "Quote required", notes: "German-built · cylindrical or disc brush options" },
+  { name: "Kärcher KIRA B 50", class: "Compact Scrubber", coverage: "30,000–50,000 sq ft", path: "20\"", runtime: "2–3 hrs", price: "Quote required", notes: "Compact · suited to corridors and mixed spaces" },
+  { name: "Avidbots Neo", class: "Large-Format Scrubber", coverage: "100,000+ sq ft", path: "28\"", runtime: "Extended", price: "RaaS model", notes: "3D vision · airports & warehouses globally deployed" },
+  { name: "Nilfisk Liberty SC50", class: "Compact Scrubber", coverage: "30,000–50,000 sq ft", path: "20\"", runtime: "2.5 hrs", price: "Quote required", notes: "Healthcare certified · optional UV-C disinfection" },
+  { name: "SoftBank Whiz", class: "Autonomous Vacuum", coverage: "Carpeted & hard floors", path: "N/A", runtime: "Per route", price: "RaaS / subscription", notes: "10,000+ units sold globally · gains 50% staff time back · office, hotel, hospital" },
+  { name: "SoftBank Scrubber 50 Pro", class: "Compact Scrubber", coverage: "High-traffic hard floors", path: "20\"", runtime: "Per route", price: "RaaS / subscription", notes: "Scrubs & dust mops · malls, supermarkets, hospitals · managed via SBR Connect platform" },
+];
+
+let selectedMachine = 'compact';
+let selectedAcqModel = 'purchase';
+
+function setMachine(cls, btn) {
+  selectedMachine = cls;
+  document.querySelectorAll('[data-group="machine"]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  updateAutoCalc();
+}
+
+function setAcqModel(model, btn) {
+  selectedAcqModel = model;
+  document.querySelectorAll('[data-group="acq"]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  updateAutoCalc();
+}
+
+function starRating(n) {
+  return '★'.repeat(n) + '☆'.repeat(5 - n);
+}
+
+function ratingColor(n) {
+  return n >= 5 ? '#4ECDC4' : n >= 4 ? '#95E1D3' : n >= 3 ? '#F7B731' : n >= 2 ? '#FF9B6B' : '#FF6B6B';
+}
+
+function updateAutoCalc() {
+  const sqft = +document.getElementById('sqft-slider').value;
+  const wage = +document.getElementById('wage-slider').value;
+  document.getElementById('sqft-display').textContent = sqft.toLocaleString() + ' sq ft';
+  document.getElementById('wage-display').textContent = '$' + wage.toFixed(2) + '/hr';
+
+  const mc = machineClasses[selectedMachine];
+
+  // Eligibility check
+  const flag = document.getElementById('eligibility-flag');
+  if (sqft < mc.minSqft) {
+    flag.style.display = 'block';
+    flag.style.background = 'rgba(255,107,107,0.1)';
+    flag.style.border = '1px solid rgba(255,107,107,0.3)';
+    flag.style.color = '#FF6B6B';
+    flag.textContent = `⚠️ ${sqft.toLocaleString()} sq ft is below the recommended minimum for a ${mc.name} machine (${mc.minSqft.toLocaleString()} sq ft). Consider the Compact class or a smaller machine.`;
+  } else if (sqft > mc.maxSqft) {
+    flag.style.display = 'block';
+    flag.style.background = 'rgba(247,183,49,0.08)';
+    flag.style.border = '1px solid rgba(247,183,49,0.2)';
+    flag.style.color = '#F7B731';
+    flag.textContent = `ℹ️ ${sqft.toLocaleString()} sq ft may require 2 machines or a Large-Format class for full coverage per shift. ROI below is modelled on one machine.`;
+  } else {
+    flag.style.display = 'none';
+  }
+
+  // Labour displacement calculation
+  // Human production rate: ~3,000 sq ft/hr (manual scrubbing)
+  const humanHrsPerDay = (sqft / 3000);
+  const humanCostPerDay = humanHrsPerDay * wage;
+  const humanCostPerYear = humanCostPerDay * 250; // 250 operating days
+
+  // Machine oversight: 0.4 hrs/shift
+  const oversightCostPerYear = 0.4 * wage * 250;
+
+  // Net annual saving
+  const netAnnualSaving = humanCostPerYear - oversightCostPerYear;
+
+  // Machine cost
+  let year1MachineCost, annualMachineCost;
+  if (selectedAcqModel === 'purchase') {
+    year1MachineCost = mc.price + mc.opex + oversightCostPerYear;
+    annualMachineCost = mc.opex + oversightCostPerYear;
+  } else {
+    // RaaS: no upfront, monthly subscription covers hardware + service
+    year1MachineCost = (mc.raasPerMonth * 12) + oversightCostPerYear;
+    annualMachineCost = (mc.raasPerMonth * 12) + oversightCostPerYear;
+  }
+
+  // Payback (purchase only)
+  const paybackYears = selectedAcqModel === 'purchase' ? (mc.price / netAnnualSaving) : null;
+  const paybackMonths = paybackYears ? (paybackYears * 12).toFixed(1) : null;
+
+  // 5-year net (assuming 3%/yr wage growth)
+  let fiveYearNet = selectedAcqModel === 'purchase' ? -mc.price : 0;
+  for (let y = 1; y <= 5; y++) {
+    const wageFactor = Math.pow(1.03, y - 1);
+    const savingThisYear = (humanCostPerYear * wageFactor) - oversightCostPerYear;
+    const costThisYear = selectedAcqModel === 'purchase' ? mc.opex : (mc.raasPerMonth * 12 + oversightCostPerYear);
+    fiveYearNet += savingThisYear - costThisYear;
+  }
+
+  const fteOffset = (humanHrsPerDay / 8).toFixed(1);
+
+  document.getElementById('auto-results').innerHTML = [
+    { label: 'Human Hours Displaced/Day', val: humanHrsPerDay.toFixed(1) + ' hrs', sub: 'at 3,000 sq ft/hr production rate', c: '#4ECDC4' },
+    { label: 'FTE Equivalent Offset', val: fteOffset + ' FTE', sub: 'full-time equivalent per day', c: '#4ECDC4' },
+    { label: 'Annual Labour Saving', val: '$' + Math.round(netAnnualSaving / 1000) + 'K', sub: 'net of oversight cost', c: '#4ECDC4' },
+    { label: selectedAcqModel === 'purchase' ? 'Payback Period' : 'Year 1 Total Cost', val: selectedAcqModel === 'purchase' ? paybackMonths + ' months' : '$' + Math.round(year1MachineCost / 1000) + 'K', sub: selectedAcqModel === 'purchase' ? 'at current loaded wage rate' : 'RaaS + oversight', c: paybackYears && paybackYears < 1.5 ? '#4ECDC4' : paybackYears && paybackYears < 2.5 ? '#F7B731' : '#FF6B6B' },
+    { label: '5-Year Net Value', val: (fiveYearNet >= 0 ? '+' : '') + '$' + Math.round(fiveYearNet / 1000) + 'K', sub: 'cumulative · 3%/yr wage growth assumption', c: fiveYearNet > 0 ? '#4ECDC4' : '#FF6B6B' },
+    { label: 'Machine Class', val: mc.name, sub: selectedAcqModel === 'purchase' ? 'Purchase: $' + mc.price.toLocaleString() : 'RaaS: $' + mc.raasPerMonth.toLocaleString() + '/mo', c: '#95E1D3' },
+  ].map(s => `
+    <div class="result-card">
+      <div class="result-label">${s.label}</div>
+      <div class="result-val" style="color:${s.c};font-size:20px;">${s.val}</div>
+      <div class="result-sub">${s.sub}</div>
+    </div>`).join('');
+}
+
+function renderSuitability() {
+  document.getElementById('suitability-table').innerHTML = suitabilityData.map(s => `
+    <div style="display:flex;align-items:center;gap:10px;padding:7px 10px;background:rgba(255,255,255,0.025);border-radius:7px;border-left:3px solid ${ratingColor(s.rating)};">
+      <span style="font-size:13px;color:${ratingColor(s.rating)};min-width:70px;letter-spacing:-1px;">${starRating(s.rating)}</span>
+      <div style="flex:1;">
+        <div style="font-size:12px;font-weight:600;color:rgba(255,255,255,0.85);">${s.type}</div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.45);">${s.class} · Hard floor: ${s.floor} · ${s.note}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderMachineSpecs() {
+  document.getElementById('machine-specs').innerHTML = machineSpecsData.map(m => `
+    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:14px;border-top:2px solid #4ECDC4;">
+      <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.9);margin-bottom:4px;">${m.name}</div>
+      <div style="font-size:10px;color:#4ECDC4;font-weight:600;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em;">${m.class}</div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div style="display:flex;justify-content:space-between;"><span style="font-size:11px;color:rgba(255,255,255,0.5);">Coverage</span><span style="font-size:11px;color:rgba(255,255,255,0.8);font-weight:600;">${m.coverage}</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="font-size:11px;color:rgba(255,255,255,0.5);">Path Width</span><span style="font-size:11px;color:rgba(255,255,255,0.8);font-weight:600;">${m.path}</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="font-size:11px;color:rgba(255,255,255,0.5);">Price</span><span style="font-size:11px;color:#F7B731;font-weight:600;">${m.price}</span></div>
+      </div>
+      <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:8px;line-height:1.5;">${m.notes}</div>
+    </div>`).join('');
+}
+
+// ─── TAB SWITCH ──────────────────────────────────────────────────────────────
+function switchTab(name, e) {
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  if(e) e.target.classList.add('active');
+  document.getElementById('kpi-strip').style.display = name === 'automation' ? 'none' : '';
+}
+
+// ─── RENDER ALL ──────────────────────────────────────────────────────────────
+function renderAll() {
+  renderKPI();
+  renderDonut();
+  renderSignals();
+  renderWageChart();
+  renderReasons();
+  renderLoop();
+  renderMarkets();
+  updateCalc();
+  updateAutoCalc();
+  renderSuitability();
+  renderMachineSpecs();
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+renderAll();
+</script>
+</body>
+</html>
