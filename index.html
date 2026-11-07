@@ -35,15 +35,6 @@
     transition: all 0.15s ease; font-family: 'Poppins', sans-serif;
   }
   .tab.active { border-color: #E6FED0; background: #E6FED0; color: #233038; font-weight: 600; }
-  /* Country filter */
-  .filter-bar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-  .filter-label { font-size: 10px; color: rgba(250,250,250,0.75); text-transform: uppercase; letter-spacing: 0.08em; margin-right: 4px; }
-  .filter-btn {
-    padding: 5px 14px; border-radius: 20px; border: 1px solid rgba(250,250,250,0.35);
-    background: transparent; color: rgba(250,250,250,0.85); font-size: 11px;
-    font-weight: 500; cursor: pointer; font-family: inherit; transition: all 0.15s ease;
-  }
-  .filter-btn.active { border-color: #C0E0D1; background: #C0E0D1; color: #233038; font-weight: 600; }
   .main { padding: 24px 32px; max-width: 1100px; margin: 0 auto; }
   .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
   .kpi-card { background: #FAFAFA; border-radius: 12px; padding: 16px; }
@@ -112,11 +103,6 @@
     flex-shrink: 0; font-size: 10px; color: #191919; font-weight: 600;
   }
   .reason-text { font-size: 12px; color: #233038; line-height: 1.4; }
-  .filter-notice {
-    display: none; background: #C0E0D1; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px;
-    font-size: 12px; color: #233038;
-  }
-  .filter-notice.visible { display: block; }
   .machine-btn {
     padding: 8px 14px; border-radius: 7px; border: 1px solid rgba(35,48,56,0.3);
     background: transparent; color: #233038; font-size: 11px;
@@ -124,12 +110,30 @@
     text-align: center; line-height: 1.4;
   }
   .machine-btn.active { border-color: #01534D; background: #01534D; color: #FAFAFA; }
+  .load-error {
+    display: none; background: #B7B2CA; border: 1px solid #191919; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px;
+    font-size: 12px; color: #191919;
+  }
+  .load-error.visible { display: block; }
+  .data-tag {
+    display: inline-block; vertical-align: middle; margin-left: 6px; padding: 1px 6px; border-radius: 4px;
+    border: 1px solid #686868; color: #686868; font-size: 9px; font-weight: 500; letter-spacing: 0.04em;
+  }
+  .calc-grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .rate-input { display: flex; align-items: baseline; gap: 4px; margin-top: 2px; }
+  .rate-input input {
+    width: 100px; font-family: 'Poppins', sans-serif; font-size: 22px; font-weight: 600; letter-spacing: -0.03em; color: #01534D;
+    background: #EDEDE1; border: 1px solid rgba(35,48,56,0.3); border-radius: 6px; padding: 2px 8px;
+  }
+  .rate-input input:focus { outline: 2px solid #01534D; outline-offset: 1px; }
+  .rate-input span { font-family: 'Poppins', sans-serif; font-size: 22px; font-weight: 600; color: #01534D; }
+  .calc-ref { font-size: 11px; color: #686868; margin-top: 6px; }
   @media (max-width: 700px) {
     .kpi-grid { grid-template-columns: 1fr 1fr; }
     .two-col { grid-template-columns: 1fr; }
     .three-col { grid-template-columns: 1fr 1fr; }
     .result-grid { grid-template-columns: 1fr; }
-    .calc-grid { grid-template-columns: 1fr; }
+    .calc-grid, .calc-grid-3 { grid-template-columns: 1fr; }
     .header-logo { padding-left: 16px; }
     .header-logo img { width: 40px; height: 40px; }
     .header-inner { padding: 16px 16px 16px 12px; }
@@ -145,7 +149,7 @@
     <div>
       <div class="header-label">Jain — Labour Market Intelligence</div>
       <h1 class="header-title">Commercial Cleaning Workforce</h1>
-      <div class="header-sub" id="header-sub-text">North America · 2024–2027 · Updated November 2026</div>
+      <div class="header-sub" id="header-sub-text"></div>
     </div>
     <div class="header-right">
       <div class="tabs">
@@ -155,20 +159,14 @@
         <button class="tab" onclick="switchTab('markets',event)">Markets</button>
         <button class="tab" onclick="switchTab('automation',event)">Automation ROI</button>
       </div>
-      <div class="filter-bar">
-        <span class="filter-label">View:</span>
-        <button class="filter-btn active" onclick="setRegion('all',event)">North America</button>
-        <button class="filter-btn" onclick="setRegion('US',event)">US Only</button>
-        <button class="filter-btn" onclick="setRegion('CA',event)">Canada Only</button>
-      </div>
     </div>
   </div>
 </div>
 
 <div class="main">
 
-  <!-- Filter notice -->
-  <div class="filter-notice" id="filter-notice"></div>
+  <!-- Shown only if data.json cannot be loaded -->
+  <div class="load-error" id="load-error"></div>
 
   <!-- KPI Strip -->
   <div class="kpi-grid" id="kpi-strip"></div>
@@ -193,8 +191,8 @@
   <div id="tab-wages" class="tab-content">
     <div style="display:flex;flex-direction:column;gap:16px;">
       <div class="panel panel-dark">
-        <div class="panel-title">Wage Trends 2019–2027</div>
-        <div class="panel-sub" id="wage-chart-sub">US median hourly wage (SOC 37-2011) vs. Toronto union rate (SEIU Local 2 CBA)</div>
+        <div class="panel-title" id="wage-chart-title">Wage Trends</div>
+        <div class="panel-sub" id="wage-chart-sub"></div>
         <svg width="100%" viewBox="0 0 580 200" id="wage-chart" style="overflow:visible;"></svg>
       </div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;" id="wage-stats"></div>
@@ -210,33 +208,38 @@
     <div style="display:flex;flex-direction:column;gap:16px;">
       <div class="panel">
         <div class="panel-title">Turnover Cost Calculator</div>
-        <div class="panel-sub">Adjust team size and replacement cost to reveal the hidden P&amp;L impact</div>
-        <div class="calc-grid">
+        <div class="panel-sub">Adjust team size, replacement cost and turnover rate to reveal the hidden P&amp;L impact</div>
+        <div class="calc-grid calc-grid-3">
           <div>
-            <label class="calc-label">Team Size</label>
-            <input type="range" min="10" max="500" step="10" value="50" id="workers-slider" oninput="updateCalc()">
-            <div class="calc-val" id="workers-display">50 workers</div>
+            <label class="calc-label" for="workers-slider">Team Size</label>
+            <input type="range" id="workers-slider" oninput="updateCalc()">
+            <div class="calc-val" id="workers-display"></div>
           </div>
           <div>
-            <label class="calc-label">Cost Per Replacement</label>
-            <input type="range" min="500" max="5000" step="250" value="2000" id="cost-slider" oninput="updateCalc()">
-            <div class="calc-val" id="cost-display">$2,000</div>
+            <label class="calc-label" for="cost-slider">Cost Per Replacement</label>
+            <input type="range" id="cost-slider" oninput="updateCalc()">
+            <div class="calc-val" id="cost-display"></div>
+          </div>
+          <div>
+            <label class="calc-label" for="turnover-input">Your Annual Turnover Rate</label>
+            <div class="rate-input"><input type="number" id="turnover-input" inputmode="decimal" oninput="updateCalc()"><span>%</span></div>
+            <div class="calc-ref" id="turnover-ref"></div>
           </div>
         </div>
         <div class="result-grid">
           <div class="result-card">
             <div class="result-label">Annual Replacements</div>
-            <div class="result-val" id="replacements">100</div>
-            <div class="result-sub">at 200% turnover</div>
+            <div class="result-val" id="replacements"></div>
+            <div class="result-sub" id="replacements-sub"></div>
           </div>
           <div class="result-card">
             <div class="result-label">Hidden Annual Cost</div>
-            <div class="result-val" id="total-cost">$200K</div>
+            <div class="result-val" id="total-cost"></div>
             <div class="result-sub">not in your P&amp;L</div>
           </div>
           <div class="result-card">
             <div class="result-label">% of Labour Revenue</div>
-            <div class="result-val" id="pct-revenue">11%</div>
+            <div class="result-val" id="pct-revenue"></div>
             <div class="result-sub">eroded by turnover</div>
           </div>
         </div>
@@ -258,15 +261,9 @@
   <div id="tab-markets" class="tab-content">
     <div style="display:flex;flex-direction:column;gap:16px;">
       <div id="market-cards-wrap"></div>
-      <div class="two-col">
-        <div class="panel">
-          <div class="panel-title" style="margin-bottom:14px;">US vs Canada</div>
-          <div id="compare-table"></div>
-        </div>
-        <div style="background:#C0E0D1;border-radius:12px;padding:20px;">
-          <div style="font-size:11px;color:#01534D;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;">The Jain Opportunity</div>
-          <div id="why-jain"></div>
-        </div>
+      <div style="background:#C0E0D1;border-radius:12px;padding:20px;">
+        <div style="font-size:11px;color:#01534D;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;">The Jain Opportunity</div>
+        <div id="why-jain"></div>
       </div>
     </div>
   </div>
@@ -276,28 +273,7 @@
     <div style="display:flex;flex-direction:column;gap:16px;">
 
       <!-- KPI strip for automation -->
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
-        <div class="kpi-card" style="border-top:2px solid #01534D;">
-          <div class="kpi-label">Floor-Cleaning Robot Market (2024)</div>
-          <div class="kpi-value" style="color:#01534D;">$2.95B</div>
-          <div class="kpi-sub">Floor segment of $5.98B total · growing to $21B by 2030 · 23.7% CAGR</div>
-        </div>
-        <div class="kpi-card" style="border-top:2px solid #01534D;">
-          <div class="kpi-label">Typical Payback Period</div>
-          <div class="kpi-value" style="color:#01534D;">9–18 mo</div>
-          <div class="kpi-sub">Daily-use sites · 50K+ sq ft hard floor</div>
-        </div>
-        <div class="kpi-card" style="border-top:2px solid #B7B2CA;">
-          <div class="kpi-label">Labour Offset Per Machine</div>
-          <div class="kpi-value" style="color:#233038;">~1 FTE</div>
-          <div class="kpi-sub">Large open floor coverage · 2 shifts/day</div>
-        </div>
-        <div class="kpi-card" style="border-top:2px solid #191919;">
-          <div class="kpi-label">Annual Machine Opex</div>
-          <div class="kpi-value" style="color:#191919;">$4–7K</div>
-          <div class="kpi-sub">Consumables · maintenance · software</div>
-        </div>
-      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;" id="auto-kpis"></div>
 
       <!-- Two column: calculator + suitability -->
       <div class="two-col">
@@ -310,24 +286,20 @@
           <div style="display:flex;flex-direction:column;gap:14px;">
 
             <div>
-              <label class="calc-label">Eligible Hard Floor Area (sq ft)</label>
-              <input type="range" min="10000" max="300000" step="5000" value="80000" id="sqft-slider" oninput="updateAutoCalc()">
-              <div class="calc-val" id="sqft-display">80,000 sq ft</div>
+              <label class="calc-label" for="sqft-slider">Eligible Hard Floor Area (sq ft)</label>
+              <input type="range" id="sqft-slider" oninput="updateAutoCalc()">
+              <div class="calc-val" id="sqft-display"></div>
             </div>
 
             <div>
-              <label class="calc-label">Loaded Labour Rate ($/hr)</label>
-              <input type="range" min="16" max="40" step="0.50" value="23" id="wage-slider" oninput="updateAutoCalc()">
-              <div class="calc-val" id="wage-display">$23.00/hr</div>
+              <label class="calc-label" for="wage-slider">Loaded Labour Rate ($/hr)</label>
+              <input type="range" id="wage-slider" oninput="updateAutoCalc()">
+              <div class="calc-val" id="wage-display"></div>
             </div>
 
             <div>
               <label class="calc-label">Machine Class</label>
-              <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;">
-                <button class="machine-btn active" data-group="machine" onclick="setMachine('compact',this)">Compact<br><span style="font-size:10px;font-weight:400;">$27,500 · 30–50K sq ft</span></button>
-                <button class="machine-btn" data-group="machine" onclick="setMachine('mid',this)">Mid-Size<br><span style="font-size:10px;font-weight:400;">$47,070 incl. dock · 50–100K sq ft</span></button>
-                <button class="machine-btn" data-group="machine" onclick="setMachine('large',this)">Large-Format<br><span style="font-size:10px;font-weight:400;">$85,000 · 100–200K sq ft</span></button>
-              </div>
+              <div style="display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;" id="machine-buttons"></div>
             </div>
 
             <div>
@@ -359,7 +331,7 @@
 
       <!-- Machine specs row -->
       <div class="panel">
-        <div class="panel-title">Machine Specifications — 2026 Reference</div>
+        <div class="panel-title" id="specs-title">Machine Specifications</div>
         <div class="panel-sub">Key models currently deployed in commercial BSC contracts</div>
         <div id="machine-specs" style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:4px;"></div>
       </div>
@@ -368,8 +340,7 @@
       <div style="background:#C0E0D1;border-radius:12px;padding:20px;">
         <div style="font-size:11px;color:#01534D;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">The BSC Machine Inventory Play</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-        <div style="font-size:12px;color:#233038;line-height:1.7;">
-            A BSC that builds a fleet of 3–5 autonomous scrubbers across their contract portfolio creates a compounding competitive advantage. The machine cost is fixed. The labour cost it replaces grows at 4.2%/yr. Every year the machine operates, the margin advantage widens.
+        <div style="font-size:12px;color:#233038;line-height:1.7;" id="fleet-text">
           </div>
           <div style="font-size:12px;color:#233038;line-height:1.7;">
             Large REIT and property management groups are beginning to <strong style="color:#191919;">require autonomous cleaning technology</strong> as part of BSC contract specifications. Machine capability is becoming a qualification criterion — not just an efficiency tool.
@@ -377,7 +348,7 @@
         </div>
         <div style="margin-top:14px;padding:12px 16px;background:#FAFAFA;border:1px solid #B7B2CA;border-radius:8px;">
           <div style="font-size:11px;color:#191919;font-weight:700;margin-bottom:6px;">Strategic Watch: SoftBank Robotics Connect</div>
-          <div style="font-size:12px;color:#233038;line-height:1.6;">SoftBank Robotics America launched <strong style="color:#191919;">SoftBank Robotics Connect</strong> in June 2025 — a fleet management platform giving BSCs visibility across heterogeneous machine fleets from a single dashboard. Their Flagship Facility Services partnership deployed ~100 machines across 15 locations in six months. Connect tracks robot performance and cleaning SOP compliance. This is adjacent to Jain's bid intelligence layer — approaching the same problem from the machine side rather than the labour economics side. Worth monitoring as a potential integration partner or distribution channel.</div>
+          <div style="font-size:12px;color:#233038;line-height:1.6;" id="watch-text"></div>
         </div>
       </div>
 
@@ -385,110 +356,19 @@
   </div>
 
   <div class="footer">
-    <div class="footer-sources">Sources: BLS OES, SEIU Local 2, SEIU 32BJ, BSCAI, Aspire, Statistics Canada Job Bank, IRCC, National Immigration Forum, Sproutmation, Tennant, Avidbots, Kärcher, SoftBank Robotics America, Grand View Research · May 2026</div>
+    <div class="footer-sources" id="footer-sources"></div>
     <div class="footer-brand">JAIN · BUILDING INTELLIGENCE. DRIVING PERFORMANCE.</div>
   </div>
 </div>
 
 <script>
-// ─── STATE ───────────────────────────────────────────────────────────────────
-let currentRegion = 'all';
-
-// ─── DATA ────────────────────────────────────────────────────────────────────
-const wages = [
-  { year:"2019", us:14.20, ca:15.80 },
-  { year:"2020", us:14.65, ca:16.10 },
-  { year:"2021", us:15.10, ca:16.50 },
-  { year:"2022", us:15.80, ca:17.00 },
-  { year:"2023", us:16.55, ca:17.80 },
-  { year:"2024", us:17.27, ca:18.55 },
-  { year:"2025", us:17.99, ca:19.55, proj:true },
-  { year:"2026", us:18.75, ca:20.35, proj:true },
-  { year:"2027", us:19.60, ca:21.20, proj:true },
-];
-
-const segmentsAll = [
-  { name:"Domestic / Transitioning", pct:32, color:"#01534D", region:"all" },
-  { name:"Documented Immigrants", pct:28, color:"#B7B2CA", region:"all" },
-  { name:"Part-Time / Second Job", pct:22, color:"#233038", region:"all" },
-  { name:"Refugees & New Arrivals", pct:10, color:"#C0E0D1", region:"all" },
-  { name:"Undocumented (US)", pct:5, color:"#686868", region:"US" },
-  { name:"Indigenous (Canada)", pct:3, color:"#E6FED0", region:"CA" },
-];
-
-const signalsAll = [
-  { label:"Wage Growth Rate", value:"+4.2%/yr", sub:"US national; some states +6.9%", sev:"medium", region:"US" },
-  { label:"Annual Turnover", value:"~200%", sub:"Industry norm; up to 375% in some markets", sev:"high", region:"all" },
-  { label:"Labour Force Loss (US H1 2025)", value:"1.2M", sub:"Foreign-born workers left due to enforcement", sev:"high", region:"US" },
-  { label:"AI Bidding Adoption", value:"<5%", sub:"BSCs using AI for bid modelling — Jain's white space", sev:"opportunity", region:"all" },
-  { label:"Toronto Living Wage Gap", value:"$6.45/hr", sub:"$19.55 union wage vs $26.00 living wage", sev:"medium", region:"CA" },
-  { label:"IoT Investment (BSCs)", value:"62%", sub:"Companies investing in IoT-enabled tools", sev:"medium", region:"all" },
-];
-
-const marketsAll = [
-  { city:"New York City", country:"US", wage:"$20+", union:"Very High", risk:"High" },
-  { city:"Los Angeles", country:"US", wage:"$21", union:"Medium", risk:"Very High" },
-  { city:"Chicago", country:"US", wage:"$18", union:"Medium", risk:"Medium" },
-  { city:"Houston", country:"US", wage:"$15", union:"Low", risk:"Low" },
-  { city:"Toronto", country:"CA", wage:"C$19.55", union:"Very High", risk:"Low" },
-  { city:"Vancouver", country:"CA", wage:"C$21+", union:"High", risk:"Low" },
-];
-
-const kpiData = {
-  all: [
-    { label:"NA Market Size", value:"$78B+", sub:"US $77B + Canada $1.4B (2024)", accent:"#01534D" },
-    { label:"Workers Employed", value:"2.4M+", sub:"US 2.4M + Canada est. (BLS / StatsCan 2024)", accent:"#01534D" },
-    { label:"Annual Openings", value:"351K+", sub:"US replacement demand alone · not growth", accent:"#B7B2CA" },
-    { label:"Annual Turnover", value:"~200%", sub:"Industry norm · 3.6× national average", accent:"#191919" },
-  ],
-  US: [
-    { label:"US Market Size", value:"$77B", sub:"2024 · growing to $100B by 2033", accent:"#01534D" },
-    { label:"Workers Employed", value:"2.4M", sub:"Janitors & cleaners (BLS 2024)", accent:"#01534D" },
-    { label:"Annual Openings", value:"351K", sub:"Replacement demand · not growth", accent:"#B7B2CA" },
-    { label:"Annual Turnover", value:"~200%", sub:"Industry norm · 3.6× national average", accent:"#191919" },
-  ],
-  CA: [
-    { label:"Canada Market Size", value:"$1.4B", sub:"2024 · growing to $2.1B by 2034", accent:"#B7B2CA" },
-    { label:"Toronto Union Wage", value:"C$19.55", sub:"SEIU Local 2 CBA · April 2025", accent:"#01534D" },
-    { label:"Living Wage Gap", value:"$6.45/hr", sub:"$19.55 union vs $26.00 living wage (Toronto)", accent:"#191919" },
-    { label:"Immigration Risk", value:"Low", sub:"No undocumented workforce; stable policy", accent:"#01534D" },
-  ],
-};
-
-const compareRows = [
-  ["Market Size","$77B","$1.4B"],
-  ["Immigration Risk","High / Rising","Low / Stable"],
-  ["Union Density","Patchy (NYC high)","High (Toronto, Van)"],
-  ["Enforcement Risk","Acute (2025)","Minimal"],
-  ["Employer Cost Premium","8–12% above wage","12–18% above wage"],
-  ["AI Bidding Adoption","<5%","<5%"],
-];
-
-const whyJain = [
-  { stat:"<5%", label:"BSCs using AI for bid modelling" },
-  { stat:"62%", label:"BSCs investing in IoT tools" },
-  { stat:"$400K", label:"Hidden turnover cost on 100-person team" },
-  { stat:"4.2%", label:"Annual wage growth outpacing most bids" },
-];
-
-const reasons = [
-  "Isolation & invisibility (night shifts, no supervisor contact)",
-  "No clear expectations at new sites",
-  "Wage competition from logistics & food delivery",
-  "No visible career pathway",
-  "Schedule instability & income unpredictability",
-  "Management communication failures",
-];
-
-const loopSteps = [
-  { text:"High employee turnover", arrow:true, hi:true },
-  { text:"Service inconsistency & quality gaps", arrow:true },
-  { text:"Client dissatisfaction", arrow:true },
-  { text:"Client churn (55%/yr industry avg)", arrow:true },
-  { text:"Revenue pressure on BSC", arrow:true },
-  { text:"Wage suppression to cut costs", arrow:true },
-  { text:"More turnover", arrow:false, hi:true },
-];
+// Every figure on this page comes from data.json. Each figure there is an object:
+// { value, source, link, period, checked, label } — val() reads its value.
+let D = null;
+const val = f => (f !== null && typeof f === 'object' && 'value' in f) ? f.value : f;
+const money = n => '$' + Number(n).toLocaleString();
+const TONE = { positive:'#01534D', neutral:'#B7B2CA', risk:'#191919' };
+const SEGMENT_COLORS = ['#01534D', '#B7B2CA', '#233038', '#C0E0D1', '#686868', '#E6FED0'];
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
 // The brand has no red or amber, so severity is carried by darkness, solid labels and wording.
@@ -500,44 +380,32 @@ function sevLabel(s) { return s==="high"?"HIGH RISK":s==="medium"?"MONITOR":s===
 function riskColor(r) { return r==="Very High"||r==="High"?"#191919":r==="Medium"?"#B7B2CA":"#01534D"; }
 function riskBadge(r) { return r==="Very High"?"background:#191919;color:#FAFAFA;border:1px solid #191919;":r==="High"?"background:#FAFAFA;color:#191919;border:1px solid #191919;":r==="Medium"?"background:#B7B2CA;color:#233038;border:1px solid #B7B2CA;":"background:#E6FED0;color:#01534D;border:1px solid #E6FED0;"; }
 
-function filterByRegion(arr) {
-  return arr.filter(d => d.region === 'all' || d.region === currentRegion || currentRegion === 'all');
+// ─── PAGE TEXT FROM DATA ─────────────────────────────────────────────────────
+function renderText() {
+  document.getElementById('header-sub-text').textContent = D.meta.headerSub;
+  document.getElementById('footer-sources').textContent = D.meta.footerSources;
+  document.getElementById('specs-title').textContent = D.meta.specsTitle;
+  document.getElementById('fleet-text').innerHTML = D.automation.insight.fleetHtml;
+  document.getElementById('watch-text').innerHTML = D.automation.insight.watchHtml;
 }
 
-// ─── REGION FILTER ────────────────────────────────────────────────────────────
-function setRegion(r, e) {
-  currentRegion = r;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  e.target.classList.add('active');
-  // Update header subtitle
-  const labels = { all:"North America · 2024–2027 · Updated November 2026", US:"United States · 2024–2027 · Updated November 2026", CA:"Canada · 2024–2027 · Updated November 2026" };
-  document.getElementById('header-sub-text').textContent = labels[r];
-  // Filter notice
-  const notice = document.getElementById('filter-notice');
-  if (r === 'all') { notice.classList.remove('visible'); }
-  else {
-    notice.textContent = r === 'US'
-      ? 'Showing United States data only. Some panels show North America context where US-specific data is unavailable.'
-      : 'Showing Canada data only. Some panels show North America context where Canada-specific data is unavailable.';
-    notice.classList.add('visible');
-  }
-  renderAll();
-}
-
-// ─── KPI STRIP ───────────────────────────────────────────────────────────────
-function renderKPI() {
-  const data = kpiData[currentRegion];
-  document.getElementById('kpi-strip').innerHTML = data.map(k => `
-    <div class="kpi-card" style="border-top:2px solid ${k.accent};">
+// ─── KPI STRIPS ──────────────────────────────────────────────────────────────
+function kpiCards(items) {
+  return items.map(k => `
+    <div class="kpi-card" style="border-top:2px solid ${TONE[k.tone]};">
       <div class="kpi-label">${k.label}</div>
-      <div class="kpi-value" style="color:${txtColor(k.accent)};">${k.value}</div>
+      <div class="kpi-value" style="color:${txtColor(TONE[k.tone])};">${val(k.value)}</div>
       <div class="kpi-sub">${k.sub}</div>
     </div>`).join('');
+}
+function renderKPI() {
+  document.getElementById('kpi-strip').innerHTML = kpiCards(D.kpis);
+  document.getElementById('auto-kpis').innerHTML = kpiCards(D.automation.kpis);
 }
 
 // ─── DONUT ────────────────────────────────────────────────────────────────────
 function renderDonut() {
-  const segs = filterByRegion(segmentsAll);
+  const segs = D.segments.items.map((s,i) => ({ name:s.name, pct:val(s.pct), color:SEGMENT_COLORS[i % SEGMENT_COLORS.length] }));
   const total = segs.reduce((s,d) => s+d.pct, 0);
   const svg = document.getElementById('donut-svg');
   const cx=80, cy=80, r=60, inner=36;
@@ -553,33 +421,31 @@ function renderDonut() {
     const lg=seg.pct/total>0.5?1:0;
     paths+=`<path d="M ${xi1} ${yi1} L ${x1} ${y1} A ${r} ${r} 0 ${lg} 1 ${x2} ${y2} L ${xi2} ${yi2} A ${inner} ${inner} 0 ${lg} 0 ${xi1} ${yi1} Z" fill="${seg.color}" stroke="${edgeColor(seg.color)}" stroke-width="${edgeColor(seg.color)==='#FAFAFA'?2:0.75}"/>`;
   });
-  const centerLabel = currentRegion==='CA' ? ['~190K','CA est.'] : currentRegion==='US' ? ['2.4M','US workers'] : ['2.4M+','NA workers'];
-  paths+=`<text x="${cx}" y="${cy-6}" text-anchor="middle" fill="#233038" font-size="13" font-weight="700" font-family="Archivo,sans-serif">${centerLabel[0]}</text>`;
-  paths+=`<text x="${cx}" y="${cy+10}" text-anchor="middle" fill="#686868" font-size="9" font-family="Archivo,sans-serif">${centerLabel[1]}</text>`;
+  paths+=`<text x="${cx}" y="${cy-6}" text-anchor="middle" fill="#233038" font-size="13" font-weight="700" font-family="Archivo,sans-serif">${val(D.segments.centerValue)}</text>`;
+  paths+=`<text x="${cx}" y="${cy+10}" text-anchor="middle" fill="#686868" font-size="9" font-family="Archivo,sans-serif">${D.segments.centerLabel}</text>`;
   let legX=175, legY=10;
   segs.forEach((seg,i) => {
     paths+=`<rect x="${legX}" y="${legY+i*22}" width="8" height="8" rx="2" fill="${seg.color}" stroke="${edgeColor(seg.color)}" stroke-width="0.5"/>`;
     paths+=`<text x="${legX+14}" y="${legY+i*22+8}" fill="#686868" font-size="10" font-family="Archivo,sans-serif">${seg.name} <tspan font-weight="700" fill="#233038">${seg.pct}%</tspan></text>`;
   });
   svg.innerHTML=paths;
-  document.getElementById('segment-title').textContent =
-    currentRegion==='US' ? 'Workforce Segments (US)' :
-    currentRegion==='CA' ? 'Workforce Segments (Canada)' :
-    'Workforce Segments (North America)';
+  // Show the data label (e.g. Estimate) when every segment shares it.
+  const labels = [...new Set(D.segments.items.map(s => s.pct.label))];
+  document.getElementById('segment-title').innerHTML =
+    D.segments.title + (labels.length === 1 ? ` <span class="data-tag">${labels[0]}</span>` : '');
 }
 
 // ─── SIGNALS ─────────────────────────────────────────────────────────────────
 function renderSignals() {
-  const sigs = filterByRegion(signalsAll);
-  document.getElementById('signals').innerHTML = sigs.map(s=>`
-    <div class="signal-row" style="border-left:3px solid ${sevColor(s.sev)};">
+  document.getElementById('signals').innerHTML = D.signals.map(s=>`
+    <div class="signal-row" style="border-left:3px solid ${sevColor(s.severity)};">
       <div class="signal-content">
         <div class="signal-header">
           <span class="signal-label">${s.label}</span>
-          <span class="signal-badge" style="${sevBadge(s.sev)}">${sevLabel(s.sev)}</span>
+          <span class="signal-badge" style="${sevBadge(s.severity)}">${sevLabel(s.severity)}</span>
         </div>
         <div style="display:flex;align-items:baseline;gap:8px;margin-top:3px;">
-          <span class="signal-val" style="color:${txtColor(sevColor(s.sev))}">${s.value}</span>
+          <span class="signal-val" style="color:${txtColor(sevColor(s.severity))}">${val(s.value)}</span>
           <span style="font-size:11px;color:#686868">${s.sub}</span>
         </div>
       </div>
@@ -588,17 +454,14 @@ function renderSignals() {
 
 // ─── WAGE CHART ──────────────────────────────────────────────────────────────
 function renderWageChart() {
-  const showUS = currentRegion !== 'CA';
-  const showCA = currentRegion !== 'US';
-  document.getElementById('wage-chart-sub').textContent =
-    currentRegion==='US' ? 'US median hourly wage (SOC 37-2011) · BLS data' :
-    currentRegion==='CA' ? 'Toronto union wage (SEIU Local 2 CBA) · Canadian data' :
-    'US median hourly wage (SOC 37-2011) vs. Toronto union rate (SEIU Local 2 CBA)';
+  const wages = D.wages.series.map(d => ({ year:d.year, us:val(d.value), proj:d.projected }));
+  document.getElementById('wage-chart-title').textContent = `Wage Trends ${wages[0].year}–${wages[wages.length-1].year}`;
+  document.getElementById('wage-chart-sub').textContent = D.wages.subtitle;
 
   const svg=document.getElementById('wage-chart');
   const W=580, H=200, pl=44, pr=24, pt=16, pb=40;
   const chartW=W-pl-pr, chartH=H-pt-pb;
-  const allV=wages.flatMap(d=>{let v=[];if(showUS)v.push(d.us);if(showCA)v.push(d.ca);return v;});
+  const allV=wages.map(d=>d.us);
   const minV=Math.min(...allV)-0.5, maxV=Math.max(...allV)+0.5;
   const n=wages.length;
   const xS=i=>pl+(i/(n-1))*chartW;
@@ -615,80 +478,49 @@ function renderWageChart() {
   const projX=xS(splitIdx);
   html+=`<rect x="${projX}" y="${pt}" width="${xS(n-1)-projX}" height="${chartH}" fill="rgba(250,250,250,0.06)" rx="2"/>`;
   html+=`<text x="${projX+6}" y="${pt+12}" fill="rgba(250,250,250,0.7)" font-size="9" font-family="Archivo,sans-serif">PROJECTED</text>`;
-  if(showUS){
-    const usS=wages.slice(0,splitIdx+1).map((d,i)=>`${xS(i)},${yS(d.us)}`).join(' ');
-    const usD=wages.slice(splitIdx).map((d,i)=>`${xS(splitIdx+i)},${yS(d.us)}`).join(' ');
-    html+=`<polyline points="${usS}" fill="none" stroke="#E6FED0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`;
-    html+=`<polyline points="${usD}" fill="none" stroke="#E6FED0" stroke-width="2" stroke-dasharray="5,4" stroke-linecap="round"/>`;
-    wages.forEach((d,i)=>{
-      html+=`<circle cx="${xS(i)}" cy="${yS(d.us)}" r="3.5" fill="${d.proj?'#233038':'#E6FED0'}" stroke="#E6FED0" stroke-width="1.5"/>`;
-    });
-  }
-  if(showCA){
-    const caS=wages.slice(0,splitIdx+1).map((d,i)=>`${xS(i)},${yS(d.ca)}`).join(' ');
-    const caD=wages.slice(splitIdx).map((d,i)=>`${xS(splitIdx+i)},${yS(d.ca)}`).join(' ');
-    html+=`<polyline points="${caS}" fill="none" stroke="#B7B2CA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`;
-    html+=`<polyline points="${caD}" fill="none" stroke="#B7B2CA" stroke-width="2" stroke-dasharray="5,4" stroke-linecap="round"/>`;
-    wages.forEach((d,i)=>{
-      html+=`<circle cx="${xS(i)}" cy="${yS(d.ca)}" r="3.5" fill="${d.proj?'#233038':'#B7B2CA'}" stroke="#B7B2CA" stroke-width="1.5"/>`;
-    });
-  }
-  let legItems=[];
-  if(showUS) legItems.push({c:'#E6FED0',label:'US Median (SOC 37-2011)'});
-  if(showCA) legItems.push({c:'#B7B2CA',label:'Canada Union Wage (SEIU Local 2 CBA)'});
-  let lx=pl+10;
-  legItems.forEach(li=>{
-    html+=`<circle cx="${lx}" cy="${H-22}" r="4" fill="${li.c}"/>`;
-    html+=`<text x="${lx+10}" y="${H-18}" fill="rgba(250,250,250,0.85)" font-size="10" font-family="Archivo,sans-serif">${li.label}</text>`;
-    lx+=li.label.length*6.5+20;
+  const usS=wages.slice(0,splitIdx+1).map((d,i)=>`${xS(i)},${yS(d.us)}`).join(' ');
+  const usD=wages.slice(splitIdx).map((d,i)=>`${xS(splitIdx+i)},${yS(d.us)}`).join(' ');
+  html+=`<polyline points="${usS}" fill="none" stroke="#E6FED0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+  html+=`<polyline points="${usD}" fill="none" stroke="#E6FED0" stroke-width="2" stroke-dasharray="5,4" stroke-linecap="round"/>`;
+  wages.forEach((d,i)=>{
+    html+=`<circle cx="${xS(i)}" cy="${yS(d.us)}" r="3.5" fill="${d.proj?'#233038':'#E6FED0'}" stroke="#E6FED0" stroke-width="1.5"/>`;
   });
+  const lx=pl+10;
+  html+=`<circle cx="${lx}" cy="${H-22}" r="4" fill="#E6FED0"/>`;
+  html+=`<text x="${lx+10}" y="${H-18}" fill="rgba(250,250,250,0.85)" font-size="10" font-family="Archivo,sans-serif">${D.wages.legend}</text>`;
   svg.innerHTML=html;
 
-  // Wage stat cards — always 4 cards in consistent structure:
-  // [1] Current wage level (region-specific)
-  // [2] Wage growth / trajectory (region-specific)
-  // [3] Annual turnover rate (universal — always shown)
-  // [4] Region-specific context card
-  const wageStats = currentRegion==='CA' ? [
-    { label:"Toronto Union Wage (2025)", value:"C$19.55/hr", sub:"SEIU Local 2 CBA · retroactive Apr 2025", color:"#B7B2CA" },
-    { label:"Wage Trajectory (Toronto)", value:"C$21.55/hr", sub:"Minimum by CBA expiry · +$1.00/hr/yr guaranteed", color:"#B7B2CA" },
-    { label:"Industry Turnover Rate", value:"~200%/yr", sub:"North America norm · 3.6× national average", color:"#191919" },
-    { label:"Living Wage Gap (Toronto)", value:"$6.45/hr", sub:"$19.55 union vs $26.00 living wage (2024)", color:"#191919" },
-  ] : currentRegion==='US' ? [
-    { label:"US Median Wage (2024)", value:"$17.27/hr", sub:"SOC 37-2011 · BLS OES May 2024", color:"#01534D" },
-    { label:"US Wage Growth Rate", value:"+4.2%/yr", sub:"National avg · Arizona +6.9% · projected $19.60 by 2027", color:"#01534D" },
-    { label:"Industry Turnover Rate", value:"~200%/yr", sub:"US norm · costs $300K–$600K/yr on 100-person team", color:"#191919" },
-    { label:"Added Labour Cost (2027)", value:"+$5,200", sub:"Per worker vs 2024 baseline at current growth rate", color:"#B7B2CA" },
-  ] : [
-    { label:"US Median Wage (2024)", value:"$17.27/hr", sub:"SOC 37-2011 · projected $19.60/hr by 2027", color:"#01534D" },
-    { label:"Canada Union Wage (2025)", value:"C$19.55/hr", sub:"SEIU Local 2 Toronto CBA · Apr 2025", color:"#B7B2CA" },
-    { label:"Industry Turnover Rate", value:"~200%/yr", sub:"North America norm · $400K hidden cost on 100-person team", color:"#191919" },
-    { label:"US Wage Growth Rate", value:"+4.2%/yr", sub:"National avg · some markets +6.9% · entire structure shifts up", color:"#01534D" },
-  ];
-  document.getElementById('wage-stats').innerHTML = wageStats.map(s=>`
-    <div class="stat-card" style="border-top:2px solid ${s.color};">
+  document.getElementById('wage-stats').innerHTML = D.wageStats.map(s=>`
+    <div class="stat-card" style="border-top:2px solid ${TONE[s.tone]};">
       <div class="kpi-label">${s.label}</div>
-      <div class="stat-value" style="color:${txtColor(s.color)};">${s.value}</div>
+      <div class="stat-value" style="color:${txtColor(TONE[s.tone])};">${val(s.value)}</div>
       <div class="stat-sub">${s.sub}</div>
     </div>`).join('');
 }
 
-// ─── TURNOVER (no filter — universal) ────────────────────────────────────────
+// ─── TURNOVER ────────────────────────────────────────────────────────────────
 function updateCalc() {
+  const T = D.turnover;
+  const industryRate = val(T.industryRate);
   const workers=+document.getElementById('workers-slider').value;
   const cost=+document.getElementById('cost-slider').value;
-  const reps=Math.round(workers*2);
+  const typed=document.getElementById('turnover-input').value.trim();
+  let rate=parseFloat(typed);
+  const useReference = typed==='' || !isFinite(rate) || rate<0;
+  if (useReference) rate = industryRate;
+  const reps=Math.round(workers*rate/100);
   const total=reps*cost;
-  const pct=((total/(workers*17.27*2080))*100).toFixed(1);
+  const pct=((total/(workers*val(T.wageForRevenue)*val(T.hoursPerYear)))*100).toFixed(1);
   document.getElementById('workers-display').textContent=`${workers} workers`;
-  document.getElementById('cost-display').textContent=`$${cost.toLocaleString()}`;
+  document.getElementById('cost-display').textContent=money(cost);
   document.getElementById('replacements').textContent=reps.toLocaleString();
+  document.getElementById('replacements-sub').textContent=`at ${rate.toLocaleString()}% turnover` + (useReference && typed!=='' ? ' (industry reference)' : '');
   document.getElementById('total-cost').textContent=`$${(total/1000).toFixed(0)}K`;
   document.getElementById('pct-revenue').textContent=`${pct}%`;
 }
 
 function renderReasons() {
-  document.getElementById('reasons').innerHTML=reasons.map((r,i)=>`
+  document.getElementById('reasons').innerHTML=D.turnover.reasons.map((r,i)=>`
     <div class="reason-row">
       <div class="reason-num">${i+1}</div>
       <div class="reason-text">${r}</div>
@@ -696,29 +528,29 @@ function renderReasons() {
 }
 
 function renderLoop() {
-  document.getElementById('loop').innerHTML=loopSteps.map(s=>`
+  document.getElementById('loop').innerHTML=D.turnover.loop.map(s=>`
     <div style="display:flex;flex-direction:column;align-items:flex-start;">
       <div style="font-size:12px;padding:7px 12px;border-radius:6px;width:100%;
-        background:${s.hi?'#233038':'#EDEDE1'};
-        border:1px solid ${s.hi?'#233038':'#EDEDE1'};
-        color:${s.hi?'#FAFAFA':'#233038'};
-        font-weight:${s.hi?'700':'400'};">${s.text}</div>
+        background:${s.highlight?'#233038':'#EDEDE1'};
+        border:1px solid ${s.highlight?'#233038':'#EDEDE1'};
+        color:${s.highlight?'#FAFAFA':'#233038'};
+        font-weight:${s.highlight?'700':'400'};">${s.text}</div>
       ${s.arrow?'<div style="width:1px;height:8px;background:#B7B2CA;margin:0 0 0 16px;"></div>':''}
     </div>`).join('');
 }
 
 // ─── MARKETS ─────────────────────────────────────────────────────────────────
 function renderMarkets() {
-  const filtered = marketsAll.filter(m => currentRegion==='all' || m.country===currentRegion);
-  const cols = filtered.length <= 3 ? filtered.length : 3;
+  const cities = D.markets.cities.map(m => ({ city:m.city, wage:val(m.wage), union:val(m.union), risk:val(m.risk) }));
+  const cols = cities.length <= 3 ? cities.length : 3;
   document.getElementById('market-cards-wrap').innerHTML =
     `<div style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:12px;">` +
-    filtered.map(m=>`
+    cities.map(m=>`
       <div class="market-card" style="border-top:2px solid ${riskColor(m.risk)};">
         <div class="market-header">
           <div>
             <div class="market-name">${m.city}</div>
-            <div class="market-country">${m.country==='US'?'United States':'Canada'}</div>
+            <div class="market-country">${D.meta.countryName}</div>
           </div>
           <div class="market-risk-badge" style="${riskBadge(m.risk)}">${m.risk} RISK</div>
         </div>
@@ -732,59 +564,30 @@ function renderMarkets() {
         </div>
       </div>`).join('') + '</div>';
 
-  // Compare table — always show both countries for context
-  const hdr=`<div class="compare-row" style="border-bottom:1px solid rgba(35,48,56,0.25);">
-    <span style="font-size:10px;color:#686868;"></span>
-    <span style="font-size:11px;color:#686868;text-align:center;font-weight:600;">US</span>
-    <span style="font-size:11px;color:#686868;text-align:center;font-weight:600;">Canada</span>
-  </div>`;
-  document.getElementById('compare-table').innerHTML=hdr+compareRows.map(([lbl,us,ca])=>`
-    <div class="compare-row">
-      <span style="font-size:11px;color:#686868;">${lbl}</span>
-      <span style="font-size:11px;color:${currentRegion==='CA'?'#686868':'#233038'};text-align:center;font-weight:${currentRegion==='US'?'700':'400'};">${us}</span>
-      <span style="font-size:11px;color:${currentRegion==='US'?'#686868':'#233038'};text-align:center;font-weight:${currentRegion==='CA'?'700':'400'};">${ca}</span>
-    </div>`).join('');
-
-  document.getElementById('why-jain').innerHTML=whyJain.map((s,i)=>`
-    <div class="why-stat" style="border-bottom:${i<whyJain.length-1?'1px solid rgba(1,83,77,0.25)':'none'};">
-      <div class="why-stat-val">${s.stat}</div>
+  const why = D.markets.whyJain;
+  document.getElementById('why-jain').innerHTML=why.map((s,i)=>`
+    <div class="why-stat" style="border-bottom:${i<why.length-1?'1px solid rgba(1,83,77,0.25)':'none'};">
+      <div class="why-stat-val">${val(s.stat)}</div>
       <div class="why-stat-label">${s.label}</div>
     </div>`).join('');
 }
 
 // ─── AUTOMATION CALCULATOR ────────────────────────────────────────────────────
-const machineClasses = {
-  compact: { name: "Compact", price: 27500, raasPerMonth: 737, maxSqft: 50000, minSqft: 30000, opex: 4500 },
-  mid:     { name: "Mid-Size", price: 47070, raasPerMonth: 1200, maxSqft: 100000, minSqft: 50000, opex: 5500 },
-  large:   { name: "Large-Format", price: 85000, raasPerMonth: 1900, maxSqft: 200000, minSqft: 100000, opex: 6500 },
-};
-
-const suitabilityData = [
-  { type: "Warehouses / Distribution", rating: 5, class: "Large-format", floor: "95–100%", note: "Ideal — 24hr operation" },
-  { type: "Airports / Terminals", rating: 5, class: "Mid or Large", floor: "85–95%", note: "Widely deployed & proven" },
-  { type: "Large Retail / Big-Box", rating: 5, class: "Mid or Large", floor: "90–100%", note: "Overnight ROI proven" },
-  { type: "Convention Centres / Arenas", rating: 5, class: "Large-format", floor: "90–100%", note: "Event-based scheduling" },
-  { type: "Universities / Schools", rating: 4, class: "Compact to Mid", floor: "60–80%", note: "Corridors + common areas" },
-  { type: "Healthcare Facilities", rating: 4, class: "Compact to Mid", floor: "70–85%", note: "High compliance; UV-C add-on" },
-  { type: "Shopping Malls", rating: 4, class: "Mid-size", floor: "80–90%", note: "Common areas only" },
-  { type: "Large Office (common areas)", rating: 3, class: "Compact", floor: "30–50%", note: "Lobbies & corridors only" },
-  { type: "Standard Office Suites", rating: 2, class: "Not recommended", floor: "20–40%", note: "Too much furniture & carpet" },
-  { type: "Restrooms / Elevators", rating: 1, class: "N/A", floor: "N/A", note: "Human cleaning required" },
-];
-
-const machineSpecsData = [
-  { name: "Tennant T7AMR", class: "Mid-Size Scrubber", coverage: "45,760 sq ft/run", path: "26\"", runtime: "3.5 hrs", price: "$85,077", notes: "US-made · BrainOS · LiDAR · unaffected by tariffs" },
-  { name: "CenoBots L50", class: "Mid-Size Scrubber", coverage: "150,000 sq ft/2 shifts", path: "32\"", runtime: "Multi-shift", price: "$41,820 + $5,250 dock", notes: "Singapore-made · tariff-free · proven warehouse ROI" },
-  { name: "Kärcher KIRA B 200", class: "Large-Format Scrubber", coverage: "200,000 sq ft", path: "34\"", runtime: "Extended", price: "Quote required", notes: "German-built · cylindrical or disc brush options" },
-  { name: "Kärcher KIRA B 50", class: "Compact Scrubber", coverage: "30,000–50,000 sq ft", path: "20\"", runtime: "2–3 hrs", price: "Quote required", notes: "Compact · suited to corridors and mixed spaces" },
-  { name: "Avidbots Neo", class: "Large-Format Scrubber", coverage: "100,000+ sq ft", path: "28\"", runtime: "Extended", price: "RaaS model", notes: "3D vision · airports & warehouses globally deployed" },
-  { name: "Nilfisk Liberty SC50", class: "Compact Scrubber", coverage: "30,000–50,000 sq ft", path: "20\"", runtime: "2.5 hrs", price: "Quote required", notes: "Healthcare certified · optional UV-C disinfection" },
-  { name: "SoftBank Whiz", class: "Autonomous Vacuum", coverage: "Carpeted & hard floors", path: "N/A", runtime: "Per route", price: "RaaS / subscription", notes: "10,000+ units sold globally · gains 50% staff time back · office, hotel, hospital" },
-  { name: "SoftBank Scrubber 50 Pro", class: "Compact Scrubber", coverage: "High-traffic hard floors", path: "20\"", runtime: "Per route", price: "RaaS / subscription", notes: "Scrubs & dust mops · malls, supermarkets, hospitals · managed via SBR Connect platform" },
-];
-
 let selectedMachine = 'compact';
 let selectedAcqModel = 'purchase';
+
+function machineClass(key) {
+  const m = D.automation.machineClasses[key];
+  return { name:m.name, priceNote:m.priceNote, price:val(m.price), raasPerMonth:val(m.raasPerMonth), opex:val(m.opex), minSqft:val(m.minSqft), maxSqft:val(m.maxSqft) };
+}
+
+function renderMachineButtons() {
+  document.getElementById('machine-buttons').innerHTML = Object.keys(D.automation.machineClasses).map(key => {
+    const m = machineClass(key);
+    const price = money(m.price) + (m.priceNote ? ' ' + m.priceNote : '');
+    return `<button class="machine-btn${key===selectedMachine?' active':''}" data-group="machine" onclick="setMachine('${key}',this)">${m.name}<br><span style="font-size:10px;font-weight:400;">${price} · ${m.minSqft/1000}–${m.maxSqft/1000}K sq ft</span></button>`;
+  }).join('');
+}
 
 function setMachine(cls, btn) {
   selectedMachine = cls;
@@ -809,12 +612,17 @@ function ratingColor(n) {
 }
 
 function updateAutoCalc() {
+  const A = D.automation.assumptions;
+  const productionRate = val(A.productionRateSqftPerHr);
+  const oversightHrs = val(A.oversightHrsPerShift);
+  const days = val(A.operatingDaysPerYear);
+  const wageGrowth = val(A.wageGrowthPerYear);
   const sqft = +document.getElementById('sqft-slider').value;
   const wage = +document.getElementById('wage-slider').value;
   document.getElementById('sqft-display').textContent = sqft.toLocaleString() + ' sq ft';
   document.getElementById('wage-display').textContent = '$' + wage.toFixed(2) + '/hr';
 
-  const mc = machineClasses[selectedMachine];
+  const mc = machineClass(selectedMachine);
 
   // Eligibility check
   const flag = document.getElementById('eligibility-flag');
@@ -835,13 +643,12 @@ function updateAutoCalc() {
   }
 
   // Labour displacement calculation
-  // Human production rate: ~3,000 sq ft/hr (manual scrubbing)
-  const humanHrsPerDay = (sqft / 3000);
+  const humanHrsPerDay = (sqft / productionRate);
   const humanCostPerDay = humanHrsPerDay * wage;
-  const humanCostPerYear = humanCostPerDay * 250; // 250 operating days
+  const humanCostPerYear = humanCostPerDay * days;
 
-  // Machine oversight: 0.4 hrs/shift
-  const oversightCostPerYear = 0.4 * wage * 250;
+  // Machine oversight
+  const oversightCostPerYear = oversightHrs * wage * days;
 
   // Net annual saving
   const netAnnualSaving = humanCostPerYear - oversightCostPerYear;
@@ -861,24 +668,25 @@ function updateAutoCalc() {
   const paybackYears = selectedAcqModel === 'purchase' ? (mc.price / netAnnualSaving) : null;
   const paybackMonths = paybackYears ? (paybackYears * 12).toFixed(1) : null;
 
-  // 5-year net (assuming 3%/yr wage growth)
+  // 5-year net, with labour costs growing each year
   let fiveYearNet = selectedAcqModel === 'purchase' ? -mc.price : 0;
   for (let y = 1; y <= 5; y++) {
-    const wageFactor = Math.pow(1.03, y - 1);
+    const wageFactor = Math.pow(1 + wageGrowth, y - 1);
     const savingThisYear = (humanCostPerYear * wageFactor) - oversightCostPerYear;
     const costThisYear = selectedAcqModel === 'purchase' ? mc.opex : (mc.raasPerMonth * 12 + oversightCostPerYear);
     fiveYearNet += savingThisYear - costThisYear;
   }
 
-  const fteOffset = (humanHrsPerDay / 8).toFixed(1);
+  const fteOffset = (humanHrsPerDay / val(A.hoursPerFte)).toFixed(1);
+  const growthPct = Math.round(wageGrowth * 1000) / 10;
 
   document.getElementById('auto-results').innerHTML = [
-    { label: 'Human Hours Displaced/Day', val: humanHrsPerDay.toFixed(1) + ' hrs', sub: 'at 3,000 sq ft/hr production rate', c: '#01534D' },
+    { label: 'Human Hours Displaced/Day', val: humanHrsPerDay.toFixed(1) + ' hrs', sub: `at ${productionRate.toLocaleString()} sq ft/hr production rate`, c: '#01534D' },
     { label: 'FTE Equivalent Offset', val: fteOffset + ' FTE', sub: 'full-time equivalent per day', c: '#01534D' },
     { label: 'Annual Labour Saving', val: '$' + Math.round(netAnnualSaving / 1000) + 'K', sub: 'net of oversight cost', c: '#01534D' },
-    { label: selectedAcqModel === 'purchase' ? 'Payback Period' : 'Year 1 Total Cost', val: selectedAcqModel === 'purchase' ? paybackMonths + ' months' : '$' + Math.round(year1MachineCost / 1000) + 'K', sub: selectedAcqModel === 'purchase' ? 'at current loaded wage rate' : 'RaaS + oversight', c: paybackYears && paybackYears < 1.5 ? '#01534D' : paybackYears && paybackYears < 2.5 ? '#233038' : '#191919' },
-    { label: '5-Year Net Value', val: (fiveYearNet >= 0 ? '+' : '') + '$' + Math.round(fiveYearNet / 1000) + 'K', sub: 'cumulative · 3%/yr wage growth assumption', c: fiveYearNet > 0 ? '#01534D' : '#191919' },
-    { label: 'Machine Class', val: mc.name, sub: selectedAcqModel === 'purchase' ? 'Purchase: $' + mc.price.toLocaleString() : 'RaaS: $' + mc.raasPerMonth.toLocaleString() + '/mo', c: '#233038' },
+    { label: selectedAcqModel === 'purchase' ? 'Payback Period' : 'Year 1 Total Cost', val: selectedAcqModel === 'purchase' ? paybackMonths + ' months' : '$' + Math.round(year1MachineCost / 1000) + 'K', sub: selectedAcqModel === 'purchase' ? 'at current loaded wage rate' : 'RaaS + oversight', c: paybackYears && paybackYears < val(A.paybackGoodYears) ? '#01534D' : paybackYears && paybackYears < val(A.paybackOkYears) ? '#233038' : '#191919' },
+    { label: '5-Year Net Value', val: (fiveYearNet >= 0 ? '+' : '') + '$' + Math.round(fiveYearNet / 1000) + 'K', sub: `cumulative · ${growthPct}%/yr wage growth assumption`, c: fiveYearNet > 0 ? '#01534D' : '#191919' },
+    { label: 'Machine Class', val: mc.name, sub: selectedAcqModel === 'purchase' ? 'Purchase: ' + money(mc.price) : 'RaaS: ' + money(mc.raasPerMonth) + '/mo', c: '#233038' },
   ].map(s => `
     <div class="result-card">
       <div class="result-label">${s.label}</div>
@@ -888,25 +696,28 @@ function updateAutoCalc() {
 }
 
 function renderSuitability() {
-  document.getElementById('suitability-table').innerHTML = suitabilityData.map(s => `
-    <div style="display:flex;align-items:center;gap:10px;padding:7px 10px;background:#EDEDE1;border-radius:7px;border-left:3px solid ${ratingColor(s.rating)};">
-      <span style="font-size:13px;color:${ratingColor(s.rating)};min-width:70px;letter-spacing:-1px;">${starRating(s.rating)}</span>
+  document.getElementById('suitability-table').innerHTML = D.automation.suitability.map(s => {
+    const rating = val(s.rating);
+    return `
+    <div style="display:flex;align-items:center;gap:10px;padding:7px 10px;background:#EDEDE1;border-radius:7px;border-left:3px solid ${ratingColor(rating)};">
+      <span style="font-size:13px;color:${ratingColor(rating)};min-width:70px;letter-spacing:-1px;">${starRating(rating)}</span>
       <div style="flex:1;">
         <div style="font-size:12px;font-weight:600;color:#233038;">${s.type}</div>
-        <div style="font-size:10px;color:#686868;">${s.class} · Hard floor: ${s.floor} · ${s.note}</div>
+        <div style="font-size:10px;color:#686868;">${s.class} · Hard floor: ${val(s.floor)} · ${s.note}</div>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function renderMachineSpecs() {
-  document.getElementById('machine-specs').innerHTML = machineSpecsData.map(m => `
+  document.getElementById('machine-specs').innerHTML = D.automation.specs.map(m => `
     <div style="background:#EDEDE1;border-radius:10px;padding:14px;border-top:2px solid #01534D;">
       <div style="font-size:13px;font-weight:700;color:#233038;margin-bottom:4px;">${m.name}</div>
       <div style="font-size:10px;color:#01534D;font-weight:600;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em;">${m.class}</div>
       <div style="display:flex;flex-direction:column;gap:4px;">
-        <div style="display:flex;justify-content:space-between;"><span style="font-size:11px;color:#686868;">Coverage</span><span style="font-size:11px;color:#233038;font-weight:600;">${m.coverage}</span></div>
-        <div style="display:flex;justify-content:space-between;"><span style="font-size:11px;color:#686868;">Path Width</span><span style="font-size:11px;color:#233038;font-weight:600;">${m.path}</span></div>
-        <div style="display:flex;justify-content:space-between;"><span style="font-size:11px;color:#686868;">Price</span><span style="font-size:11px;color:#233038;font-weight:600;">${m.price}</span></div>
+        <div style="display:flex;justify-content:space-between;gap:8px;"><span style="font-size:11px;color:#686868;">Coverage</span><span style="font-size:11px;color:#233038;font-weight:600;text-align:right;">${val(m.coverage)}</span></div>
+        <div style="display:flex;justify-content:space-between;gap:8px;"><span style="font-size:11px;color:#686868;">Path Width</span><span style="font-size:11px;color:#233038;font-weight:600;text-align:right;">${val(m.path)}</span></div>
+        <div style="display:flex;justify-content:space-between;gap:8px;"><span style="font-size:11px;color:#686868;">Price</span><span style="font-size:11px;color:#233038;font-weight:600;text-align:right;">${val(m.price)}</span></div>
       </div>
       <div style="font-size:10px;color:#686868;margin-top:8px;line-height:1.5;">${m.notes}</div>
     </div>`).join('');
@@ -921,8 +732,23 @@ function switchTab(name, e) {
   document.getElementById('kpi-strip').style.display = name === 'automation' ? 'none' : '';
 }
 
+// ─── INPUT SETTINGS FROM DATA ────────────────────────────────────────────────
+function applyControls() {
+  const C = D.controls;
+  const set = (id, c) => { const el = document.getElementById(id); el.min = c.min; el.max = c.max; el.step = c.step; if ('value' in c) el.value = c.value; };
+  set('workers-slider', C.workers);
+  set('cost-slider', C.costPerReplacement);
+  set('turnover-input', C.turnoverRate);
+  set('sqft-slider', C.sqft);
+  set('wage-slider', C.loadedWage);
+  const industryRate = val(D.turnover.industryRate);
+  document.getElementById('turnover-input').value = industryRate;
+  document.getElementById('turnover-ref').textContent = `Industry reference (operator surveys): ~${industryRate}%`;
+}
+
 // ─── RENDER ALL ──────────────────────────────────────────────────────────────
 function renderAll() {
+  renderText();
   renderKPI();
   renderDonut();
   renderSignals();
@@ -930,6 +756,7 @@ function renderAll() {
   renderReasons();
   renderLoop();
   renderMarkets();
+  renderMachineButtons();
   updateCalc();
   updateAutoCalc();
   renderSuitability();
@@ -937,7 +764,14 @@ function renderAll() {
 }
 
 // ─── INIT ────────────────────────────────────────────────────────────────────
-renderAll();
+fetch('data.json', { cache: 'no-cache' })
+  .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+  .then(data => { D = data; applyControls(); renderAll(); })
+  .catch(err => {
+    const box = document.getElementById('load-error');
+    box.textContent = 'The dashboard data (data.json) could not be loaded, so figures are not shown. If you opened this file directly from your computer, view it through a web server or the live site instead. (' + err.message + ')';
+    box.classList.add('visible');
+  });
 </script>
 </body>
 </html>

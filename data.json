@@ -1,0 +1,1714 @@
+{
+  "meta": {
+    "about": "All figures shown on the Jain labour dashboard. Edit values here; index.html reads this file.",
+    "labelDefinitions": {
+      "Direct": "From a named source, measuring exactly what the dashboard shows.",
+      "Proxy": "From a named source, but measuring a related population, place or product.",
+      "Estimate": "Projected, derived, modelled or a judgement — or the source is not recorded yet."
+    },
+    "region": "United States",
+    "countryName": "United States",
+    "headerSub": "United States · 2024–2027 · Updated November 2026",
+    "specsTitle": "Machine Specifications — 2026 Reference",
+    "footerSources": "Sources: US Census Bureau (2022 Economic Census), BLS OES, SEIU 32BJ, BSCAI, Aspire, National Immigration Forum, Operator surveys, Sproutmation, Tennant, Avidbots, Kärcher, SoftBank Robotics America, Grand View Research · May 2026; market size and machine prices updated November 2026"
+  },
+  "kpis": [
+    {
+      "label": "US Market Size",
+      "value": {
+        "value": "$72.6B",
+        "source": "US Census Bureau, 2022 Economic Census — NAICS 561720 Janitorial Services (US)",
+        "link": null,
+        "period": "2022",
+        "checked": null,
+        "label": "Direct"
+      },
+      "sub": "2022 Economic Census · NAICS 561720",
+      "tone": "positive"
+    },
+    {
+      "label": "Workers Employed",
+      "value": {
+        "value": "2.4M",
+        "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
+        "link": null,
+        "period": "May 2024",
+        "checked": null,
+        "label": "Proxy",
+        "note": "All janitors and cleaners, not only commercial cleaning."
+      },
+      "sub": "Janitors & cleaners (BLS 2024)",
+      "tone": "positive"
+    },
+    {
+      "label": "Annual Openings",
+      "value": {
+        "value": "351K",
+        "source": null,
+        "link": null,
+        "period": null,
+        "checked": null,
+        "label": "Estimate",
+        "note": "Source not recorded on the dashboard"
+      },
+      "sub": "Replacement demand · not growth",
+      "tone": "neutral"
+    },
+    {
+      "label": "Annual Turnover",
+      "value": {
+        "value": "~200%",
+        "source": "Operator surveys (industry reference)",
+        "link": null,
+        "period": null,
+        "checked": null,
+        "label": "Proxy",
+        "note": "Shown as \"Industry reference (operator surveys)\". An industry-wide rate standing in for any one operator; users can enter their own rate in the turnover calculator."
+      },
+      "sub": "Industry reference (operator surveys) · 3.6× national average",
+      "subFigures": [
+        {
+          "value": "3.6× national average",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        }
+      ],
+      "tone": "risk"
+    }
+  ],
+  "segments": {
+    "title": "Workforce Segments (US)",
+    "centerValue": {
+      "value": "2.4M",
+      "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
+      "link": null,
+      "period": "May 2024",
+      "checked": null,
+      "label": "Proxy"
+    },
+    "centerLabel": "US workers",
+    "items": [
+      {
+        "name": "Domestic / Transitioning",
+        "pct": {
+          "value": 32,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        }
+      },
+      {
+        "name": "Documented Immigrants",
+        "pct": {
+          "value": 28,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        }
+      },
+      {
+        "name": "Part-Time / Second Job",
+        "pct": {
+          "value": 22,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        }
+      },
+      {
+        "name": "Refugees & New Arrivals",
+        "pct": {
+          "value": 10,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        }
+      },
+      {
+        "name": "Undocumented (US)",
+        "pct": {
+          "value": 5,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        }
+      }
+    ]
+  },
+  "signals": [
+    {
+      "label": "Wage Growth Rate",
+      "value": {
+        "value": "+4.2%/yr",
+        "source": null,
+        "link": null,
+        "period": null,
+        "checked": null,
+        "label": "Estimate",
+        "note": "Source not recorded on the dashboard"
+      },
+      "sub": "US national; some states +6.9%",
+      "subFigures": [
+        {
+          "value": "+6.9% (some states)",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        }
+      ],
+      "severity": "medium"
+    },
+    {
+      "label": "Annual Turnover",
+      "value": {
+        "value": "~200%",
+        "source": "Operator surveys (industry reference)",
+        "link": null,
+        "period": null,
+        "checked": null,
+        "label": "Proxy",
+        "note": "Shown as \"Industry reference (operator surveys)\". An industry-wide rate standing in for any one operator; users can enter their own rate in the turnover calculator."
+      },
+      "sub": "Industry reference (operator surveys); up to 375% in some markets",
+      "subFigures": [
+        {
+          "value": "375% (some markets)",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        }
+      ],
+      "severity": "high"
+    },
+    {
+      "label": "Labour Force Loss (US H1 2025)",
+      "value": {
+        "value": "1.2M",
+        "source": null,
+        "link": null,
+        "period": "H1 2025",
+        "checked": null,
+        "label": "Estimate",
+        "note": "Source not recorded on the dashboard"
+      },
+      "sub": "Foreign-born workers left due to enforcement",
+      "severity": "high"
+    },
+    {
+      "label": "AI Bidding Adoption",
+      "value": {
+        "value": "<5%",
+        "source": null,
+        "link": null,
+        "period": null,
+        "checked": null,
+        "label": "Estimate",
+        "note": "Source not recorded on the dashboard"
+      },
+      "sub": "BSCs using AI for bid modelling — Jain's white space",
+      "severity": "opportunity"
+    },
+    {
+      "label": "IoT Investment (BSCs)",
+      "value": {
+        "value": "62%",
+        "source": null,
+        "link": null,
+        "period": null,
+        "checked": null,
+        "label": "Estimate",
+        "note": "Source not recorded on the dashboard"
+      },
+      "sub": "Companies investing in IoT-enabled tools",
+      "severity": "medium"
+    }
+  ],
+  "wages": {
+    "subtitle": "US median hourly wage (SOC 37-2011) · BLS data",
+    "legend": "US Median (SOC 37-2011)",
+    "series": [
+      {
+        "year": "2019",
+        "value": {
+          "value": 14.2,
+          "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
+          "link": null,
+          "period": "May 2019",
+          "checked": null,
+          "label": "Proxy",
+          "note": "Median for all janitors and cleaners, used for commercial cleaning."
+        },
+        "projected": false
+      },
+      {
+        "year": "2020",
+        "value": {
+          "value": 14.65,
+          "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
+          "link": null,
+          "period": "May 2020",
+          "checked": null,
+          "label": "Proxy",
+          "note": "Median for all janitors and cleaners, used for commercial cleaning."
+        },
+        "projected": false
+      },
+      {
+        "year": "2021",
+        "value": {
+          "value": 15.1,
+          "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
+          "link": null,
+          "period": "May 2021",
+          "checked": null,
+          "label": "Proxy",
+          "note": "Median for all janitors and cleaners, used for commercial cleaning."
+        },
+        "projected": false
+      },
+      {
+        "year": "2022",
+        "value": {
+          "value": 15.8,
+          "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
+          "link": null,
+          "period": "May 2022",
+          "checked": null,
+          "label": "Proxy",
+          "note": "Median for all janitors and cleaners, used for commercial cleaning."
+        },
+        "projected": false
+      },
+      {
+        "year": "2023",
+        "value": {
+          "value": 16.55,
+          "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
+          "link": null,
+          "period": "May 2023",
+          "checked": null,
+          "label": "Proxy",
+          "note": "Median for all janitors and cleaners, used for commercial cleaning."
+        },
+        "projected": false
+      },
+      {
+        "year": "2024",
+        "value": {
+          "value": 17.27,
+          "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
+          "link": null,
+          "period": "May 2024",
+          "checked": null,
+          "label": "Proxy",
+          "note": "Median for all janitors and cleaners, used for commercial cleaning."
+        },
+        "projected": false
+      },
+      {
+        "year": "2025",
+        "value": {
+          "value": 17.99,
+          "source": null,
+          "link": null,
+          "period": "2025",
+          "checked": null,
+          "label": "Estimate",
+          "note": "Projection; method not recorded (close to +4.2% a year from 2024)."
+        },
+        "projected": true
+      },
+      {
+        "year": "2026",
+        "value": {
+          "value": 18.75,
+          "source": null,
+          "link": null,
+          "period": "2026",
+          "checked": null,
+          "label": "Estimate",
+          "note": "Projection; method not recorded (close to +4.2% a year from 2024)."
+        },
+        "projected": true
+      },
+      {
+        "year": "2027",
+        "value": {
+          "value": 19.6,
+          "source": null,
+          "link": null,
+          "period": "2027",
+          "checked": null,
+          "label": "Estimate",
+          "note": "Projection; method not recorded (close to +4.2% a year from 2024)."
+        },
+        "projected": true
+      }
+    ]
+  },
+  "wageStats": [
+    {
+      "label": "US Median Wage (2024)",
+      "value": {
+        "value": "$17.27/hr",
+        "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
+        "link": null,
+        "period": "May 2024",
+        "checked": null,
+        "label": "Proxy"
+      },
+      "sub": "SOC 37-2011 · BLS OES May 2024",
+      "tone": "positive"
+    },
+    {
+      "label": "US Wage Growth Rate",
+      "value": {
+        "value": "+4.2%/yr",
+        "source": null,
+        "link": null,
+        "period": null,
+        "checked": null,
+        "label": "Estimate",
+        "note": "Source not recorded on the dashboard"
+      },
+      "sub": "National avg · Arizona +6.9% · projected $19.60 by 2027",
+      "subFigures": [
+        {
+          "value": "Arizona +6.9%",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        {
+          "value": "$19.60 by 2027",
+          "source": null,
+          "link": null,
+          "period": "2027",
+          "checked": null,
+          "label": "Estimate",
+          "note": "Projection."
+        }
+      ],
+      "tone": "positive"
+    },
+    {
+      "label": "Industry Turnover Rate",
+      "value": {
+        "value": "~200%/yr",
+        "source": "Operator surveys (industry reference)",
+        "link": null,
+        "period": null,
+        "checked": null,
+        "label": "Proxy",
+        "note": "Shown as \"Industry reference (operator surveys)\". An industry-wide rate standing in for any one operator; users can enter their own rate in the turnover calculator."
+      },
+      "sub": "Industry reference (operator surveys) · costs $300K–$600K/yr on 100-person team",
+      "subFigures": [
+        {
+          "value": "$300K–$600K/yr on a 100-person team",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        }
+      ],
+      "tone": "risk"
+    },
+    {
+      "label": "Added Labour Cost (2027)",
+      "value": {
+        "value": "+$5,200",
+        "source": null,
+        "link": null,
+        "period": "2027",
+        "checked": null,
+        "label": "Estimate",
+        "note": "Derived from projected wage growth."
+      },
+      "sub": "Per worker vs 2024 baseline at current growth rate",
+      "tone": "neutral"
+    }
+  ],
+  "turnover": {
+    "industryRate": {
+      "value": 200,
+      "source": "Operator surveys (industry reference)",
+      "link": null,
+      "period": null,
+      "checked": null,
+      "label": "Proxy",
+      "note": "Shown as \"Industry reference (operator surveys)\". An industry-wide rate standing in for any one operator; users can enter their own rate in the turnover calculator."
+    },
+    "wageForRevenue": {
+      "value": 17.27,
+      "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
+      "link": null,
+      "period": "May 2024",
+      "checked": null,
+      "label": "Proxy",
+      "note": "Hourly wage used to estimate labour revenue in \"% of Labour Revenue\"."
+    },
+    "hoursPerYear": {
+      "value": 2080,
+      "source": null,
+      "link": null,
+      "period": null,
+      "checked": null,
+      "label": "Estimate",
+      "note": "Standard full-time year (40 hours × 52 weeks)."
+    },
+    "reasons": [
+      "Isolation & invisibility (night shifts, no supervisor contact)",
+      "No clear expectations at new sites",
+      "Wage competition from logistics & food delivery",
+      "No visible career pathway",
+      "Schedule instability & income unpredictability",
+      "Management communication failures"
+    ],
+    "loop": [
+      {
+        "text": "High employee turnover",
+        "arrow": true,
+        "highlight": true
+      },
+      {
+        "text": "Service inconsistency & quality gaps",
+        "arrow": true
+      },
+      {
+        "text": "Client dissatisfaction",
+        "arrow": true
+      },
+      {
+        "text": "Client churn (55%/yr industry avg)",
+        "arrow": true,
+        "figures": [
+          {
+            "value": "55%/yr client churn",
+            "source": null,
+            "link": null,
+            "period": null,
+            "checked": null,
+            "label": "Estimate",
+            "note": "Source not recorded on the dashboard"
+          }
+        ]
+      },
+      {
+        "text": "Revenue pressure on BSC",
+        "arrow": true
+      },
+      {
+        "text": "Wage suppression to cut costs",
+        "arrow": true
+      },
+      {
+        "text": "More turnover",
+        "arrow": false,
+        "highlight": true
+      }
+    ]
+  },
+  "markets": {
+    "cities": [
+      {
+        "city": "New York City",
+        "wage": {
+          "value": "$20+",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "union": {
+          "value": "Very High",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "risk": {
+          "value": "High",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        }
+      },
+      {
+        "city": "Los Angeles",
+        "wage": {
+          "value": "$21",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "union": {
+          "value": "Medium",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "risk": {
+          "value": "Very High",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        }
+      },
+      {
+        "city": "Chicago",
+        "wage": {
+          "value": "$18",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "union": {
+          "value": "Medium",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "risk": {
+          "value": "Medium",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        }
+      },
+      {
+        "city": "Houston",
+        "wage": {
+          "value": "$15",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "union": {
+          "value": "Low",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "risk": {
+          "value": "Low",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        }
+      }
+    ],
+    "whyJain": [
+      {
+        "stat": {
+          "value": "<5%",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "label": "BSCs using AI for bid modelling"
+      },
+      {
+        "stat": {
+          "value": "62%",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "label": "BSCs investing in IoT tools"
+      },
+      {
+        "stat": {
+          "value": "$400K",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Derived: 200% turnover × $2,000 per replacement × 100 workers."
+        },
+        "label": "Hidden turnover cost on 100-person team"
+      },
+      {
+        "stat": {
+          "value": "4.2%",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "label": "Annual wage growth outpacing most bids"
+      }
+    ]
+  },
+  "automation": {
+    "kpis": [
+      {
+        "label": "Floor-Cleaning Robot Market (2024)",
+        "value": {
+          "value": "$2.95B",
+          "source": null,
+          "link": null,
+          "period": "2024",
+          "checked": null,
+          "label": "Estimate",
+          "note": "Market research forecast; footer lists Grand View Research, but this figure is not tied to a report."
+        },
+        "sub": "Floor segment of $5.98B total · growing to $21B by 2030 · 23.7% CAGR",
+        "subFigures": [
+          {
+            "value": "$5.98B total market",
+            "source": null,
+            "link": null,
+            "period": "2024",
+            "checked": null,
+            "label": "Estimate",
+            "note": "Source not recorded on the dashboard"
+          },
+          {
+            "value": "$21B by 2030",
+            "source": null,
+            "link": null,
+            "period": "2030",
+            "checked": null,
+            "label": "Estimate",
+            "note": "Source not recorded on the dashboard"
+          },
+          {
+            "value": "23.7% CAGR",
+            "source": null,
+            "link": null,
+            "period": null,
+            "checked": null,
+            "label": "Estimate",
+            "note": "Source not recorded on the dashboard"
+          }
+        ],
+        "tone": "positive"
+      },
+      {
+        "label": "Typical Payback Period",
+        "value": {
+          "value": "9–18 mo",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "sub": "Daily-use sites · 50K+ sq ft hard floor",
+        "subFigures": [
+          {
+            "value": "50K+ sq ft",
+            "source": null,
+            "link": null,
+            "period": null,
+            "checked": null,
+            "label": "Estimate",
+            "note": "Source not recorded on the dashboard"
+          }
+        ],
+        "tone": "positive"
+      },
+      {
+        "label": "Labour Offset Per Machine",
+        "value": {
+          "value": "~1 FTE",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "sub": "Large open floor coverage · 2 shifts/day",
+        "subFigures": [
+          {
+            "value": "2 shifts/day",
+            "source": null,
+            "link": null,
+            "period": null,
+            "checked": null,
+            "label": "Estimate",
+            "note": "Source not recorded on the dashboard"
+          }
+        ],
+        "tone": "neutral"
+      },
+      {
+        "label": "Annual Machine Opex",
+        "value": {
+          "value": "$4–7K",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "sub": "Consumables · maintenance · software",
+        "tone": "risk"
+      }
+    ],
+    "machineClasses": {
+      "compact": {
+        "name": "Compact",
+        "price": {
+          "value": 27500,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "raasPerMonth": {
+          "value": 737,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "opex": {
+          "value": 4500,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "minSqft": {
+          "value": 30000,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "maxSqft": {
+          "value": 50000,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        }
+      },
+      "mid": {
+        "name": "Mid-Size",
+        "priceNote": "incl. dock",
+        "price": {
+          "value": 47070,
+          "source": "CenoBots L50 list price $41,820 + dock $5,250, supplied by the Jain team, November 2026",
+          "link": null,
+          "period": "2026",
+          "checked": null,
+          "label": "Proxy",
+          "note": "One model standing in for the class. List price, not a negotiated deal price."
+        },
+        "raasPerMonth": {
+          "value": 1200,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "opex": {
+          "value": 5500,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "minSqft": {
+          "value": 50000,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "maxSqft": {
+          "value": 100000,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        }
+      },
+      "large": {
+        "name": "Large-Format",
+        "price": {
+          "value": 85000,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "raasPerMonth": {
+          "value": 1900,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "opex": {
+          "value": 6500,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "minSqft": {
+          "value": 100000,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "maxSqft": {
+          "value": 200000,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        }
+      }
+    },
+    "assumptions": {
+      "productionRateSqftPerHr": {
+        "value": 3000,
+        "source": null,
+        "link": null,
+        "period": null,
+        "checked": null,
+        "label": "Estimate",
+        "note": "Manual scrubbing production rate; assumption."
+      },
+      "oversightHrsPerShift": {
+        "value": 0.4,
+        "source": null,
+        "link": null,
+        "period": null,
+        "checked": null,
+        "label": "Estimate",
+        "note": "Staff time supervising the machine each shift; assumption."
+      },
+      "operatingDaysPerYear": {
+        "value": 250,
+        "source": null,
+        "link": null,
+        "period": null,
+        "checked": null,
+        "label": "Estimate",
+        "note": "Assumption."
+      },
+      "wageGrowthPerYear": {
+        "value": 0.03,
+        "source": null,
+        "link": null,
+        "period": null,
+        "checked": null,
+        "label": "Estimate",
+        "note": "Used for the 5-year net value; assumption."
+      },
+      "hoursPerFte": {
+        "value": 8,
+        "source": null,
+        "link": null,
+        "period": null,
+        "checked": null,
+        "label": "Estimate",
+        "note": "Hours in one full-time shift; assumption."
+      },
+      "paybackGoodYears": {
+        "value": 1.5,
+        "source": null,
+        "link": null,
+        "period": null,
+        "checked": null,
+        "label": "Estimate",
+        "note": "Payback under this many years is shown as good."
+      },
+      "paybackOkYears": {
+        "value": 2.5,
+        "source": null,
+        "link": null,
+        "period": null,
+        "checked": null,
+        "label": "Estimate",
+        "note": "Payback under this many years is shown as moderate."
+      }
+    },
+    "suitability": [
+      {
+        "type": "Warehouses / Distribution",
+        "rating": {
+          "value": 5,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "class": "Large-format",
+        "floor": {
+          "value": "95–100%",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "note": "Ideal — 24hr operation"
+      },
+      {
+        "type": "Airports / Terminals",
+        "rating": {
+          "value": 5,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "class": "Mid or Large",
+        "floor": {
+          "value": "85–95%",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "note": "Widely deployed & proven"
+      },
+      {
+        "type": "Large Retail / Big-Box",
+        "rating": {
+          "value": 5,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "class": "Mid or Large",
+        "floor": {
+          "value": "90–100%",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "note": "Overnight ROI proven"
+      },
+      {
+        "type": "Convention Centres / Arenas",
+        "rating": {
+          "value": 5,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "class": "Large-format",
+        "floor": {
+          "value": "90–100%",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "note": "Event-based scheduling"
+      },
+      {
+        "type": "Universities / Schools",
+        "rating": {
+          "value": 4,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "class": "Compact to Mid",
+        "floor": {
+          "value": "60–80%",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "note": "Corridors + common areas"
+      },
+      {
+        "type": "Healthcare Facilities",
+        "rating": {
+          "value": 4,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "class": "Compact to Mid",
+        "floor": {
+          "value": "70–85%",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "note": "High compliance; UV-C add-on"
+      },
+      {
+        "type": "Shopping Malls",
+        "rating": {
+          "value": 4,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "class": "Mid-size",
+        "floor": {
+          "value": "80–90%",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "note": "Common areas only"
+      },
+      {
+        "type": "Large Office (common areas)",
+        "rating": {
+          "value": 3,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "class": "Compact",
+        "floor": {
+          "value": "30–50%",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "note": "Lobbies & corridors only"
+      },
+      {
+        "type": "Standard Office Suites",
+        "rating": {
+          "value": 2,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "class": "Not recommended",
+        "floor": {
+          "value": "20–40%",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "note": "Too much furniture & carpet"
+      },
+      {
+        "type": "Restrooms / Elevators",
+        "rating": {
+          "value": 1,
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "class": "N/A",
+        "floor": {
+          "value": "N/A",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "note": "Human cleaning required"
+      }
+    ],
+    "specs": [
+      {
+        "name": "Tennant T7AMR",
+        "class": "Mid-Size Scrubber",
+        "coverage": {
+          "value": "45,760 sq ft/run",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "path": {
+          "value": "26\"",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "runtime": {
+          "value": "3.5 hrs",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "price": {
+          "value": "$78K–$100K (dealer list, incl. required software term)",
+          "source": "Dealer list pricing, supplied by the Jain team, November 2026",
+          "link": null,
+          "period": "2026",
+          "checked": null,
+          "label": "Direct",
+          "note": "List price range, not a negotiated deal price."
+        },
+        "notes": "US-made · BrainOS · LiDAR · unaffected by tariffs"
+      },
+      {
+        "name": "CenoBots L50",
+        "class": "Mid-Size Scrubber",
+        "coverage": {
+          "value": "150,000 sq ft/2 shifts",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "path": {
+          "value": "20\"",
+          "source": "CenoBots L50 specification, supplied by the Jain team, November 2026",
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Direct"
+        },
+        "runtime": {
+          "value": "Multi-shift",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "price": {
+          "value": "$41,820 + $5,250 dock",
+          "source": "CenoBots list price, supplied by the Jain team, November 2026",
+          "link": null,
+          "period": "2026",
+          "checked": null,
+          "label": "Direct",
+          "note": "List price, not a negotiated deal price."
+        },
+        "notes": "Singapore-made · tariff-free · proven warehouse ROI"
+      },
+      {
+        "name": "Kärcher KIRA B 200",
+        "class": "Large-Format Scrubber",
+        "coverage": {
+          "value": "200,000 sq ft",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "path": {
+          "value": "34\"",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "runtime": {
+          "value": "Extended",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "price": {
+          "value": "Quote required",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "No price published."
+        },
+        "notes": "German-built · cylindrical or disc brush options"
+      },
+      {
+        "name": "Kärcher KIRA B 50",
+        "class": "Compact Scrubber",
+        "coverage": {
+          "value": "30,000–50,000 sq ft",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "path": {
+          "value": "20\"",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "runtime": {
+          "value": "2–3 hrs",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "price": {
+          "value": "Quote required",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "No price published."
+        },
+        "notes": "Compact · suited to corridors and mixed spaces"
+      },
+      {
+        "name": "Avidbots Neo",
+        "class": "Large-Format Scrubber",
+        "coverage": {
+          "value": "100,000+ sq ft",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "path": {
+          "value": "28\"",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "runtime": {
+          "value": "Extended",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "price": {
+          "value": "RaaS model",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "No purchase price published."
+        },
+        "notes": "3D vision · airports & warehouses globally deployed"
+      },
+      {
+        "name": "Nilfisk Liberty SC50",
+        "class": "Compact Scrubber",
+        "coverage": {
+          "value": "30,000–50,000 sq ft",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "path": {
+          "value": "20\"",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "runtime": {
+          "value": "2.5 hrs",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "price": {
+          "value": "Quote required",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "No price published."
+        },
+        "notes": "Healthcare certified · optional UV-C disinfection"
+      },
+      {
+        "name": "SoftBank Whiz",
+        "class": "Autonomous Vacuum",
+        "coverage": {
+          "value": "Carpeted & hard floors",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "path": {
+          "value": "N/A",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "runtime": {
+          "value": "Per route",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "price": {
+          "value": "RaaS / subscription",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "No purchase price published."
+        },
+        "notes": "10,000+ units sold globally · gains 50% staff time back · office, hotel, hospital",
+        "noteFigures": [
+          {
+            "value": "10,000+ units sold",
+            "source": null,
+            "link": null,
+            "period": null,
+            "checked": null,
+            "label": "Estimate",
+            "note": "Source not recorded on the dashboard"
+          },
+          {
+            "value": "50% staff time back",
+            "source": null,
+            "link": null,
+            "period": null,
+            "checked": null,
+            "label": "Estimate",
+            "note": "Source not recorded on the dashboard"
+          }
+        ]
+      },
+      {
+        "name": "SoftBank Scrubber 50 Pro",
+        "class": "Compact Scrubber",
+        "coverage": {
+          "value": "High-traffic hard floors",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "path": {
+          "value": "20\"",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "runtime": {
+          "value": "Per route",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        "price": {
+          "value": "RaaS / subscription",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "No purchase price published."
+        },
+        "notes": "Scrubs & dust mops · malls, supermarkets, hospitals · managed via SBR Connect platform"
+      }
+    ],
+    "insight": {
+      "fleetHtml": "A BSC that builds a fleet of 3–5 autonomous scrubbers across their contract portfolio creates a compounding competitive advantage. The machine cost is fixed. The labour cost it replaces grows at 4.2%/yr. Every year the machine operates, the margin advantage widens.",
+      "fleetFigures": [
+        {
+          "value": "3–5 scrubbers",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Illustrative fleet size."
+        },
+        {
+          "value": "4.2%/yr labour cost growth",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        }
+      ],
+      "watchHtml": "SoftBank Robotics America launched <strong style=\"color:#191919;\">SoftBank Robotics Connect</strong> in June 2025 — a fleet management platform giving BSCs visibility across heterogeneous machine fleets from a single dashboard. Their Flagship Facility Services partnership deployed ~100 machines across 15 locations in six months. Connect tracks robot performance and cleaning SOP compliance. This is adjacent to Jain's bid intelligence layer — approaching the same problem from the machine side rather than the labour economics side. Worth monitoring as a potential integration partner or distribution channel.",
+      "watchFigures": [
+        {
+          "value": "Launched June 2025",
+          "source": null,
+          "link": null,
+          "period": "June 2025",
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        {
+          "value": "~100 machines",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        {
+          "value": "15 locations",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        },
+        {
+          "value": "six months",
+          "source": null,
+          "link": null,
+          "period": null,
+          "checked": null,
+          "label": "Estimate",
+          "note": "Source not recorded on the dashboard"
+        }
+      ]
+    }
+  },
+  "controls": {
+    "note": "Starting positions and ranges for the calculator inputs. These are settings, not sourced figures.",
+    "workers": {
+      "min": 10,
+      "max": 500,
+      "step": 10,
+      "value": 50
+    },
+    "costPerReplacement": {
+      "min": 500,
+      "max": 5000,
+      "step": 250,
+      "value": 2000
+    },
+    "turnoverRate": {
+      "min": 0,
+      "max": 1000,
+      "step": 5
+    },
+    "sqft": {
+      "min": 10000,
+      "max": 300000,
+      "step": 5000,
+      "value": 80000
+    },
+    "loadedWage": {
+      "min": 16,
+      "max": 40,
+      "step": 0.5,
+      "value": 23
+    }
+  }
+}
