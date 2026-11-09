@@ -23,21 +23,21 @@
         "checked": null,
         "label": "Direct"
       },
-      "sub": "2022 Economic Census · NAICS 561720",
+      "sub": "Janitorial firms (NAICS 561720) · 2022 Census",
       "tone": "positive"
     },
     {
       "label": "Workers Employed",
       "value": {
         "value": "2.4M",
-        "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
-        "link": null,
-        "period": "May 2024",
-        "checked": null,
+        "source": "BLS Occupational Outlook Handbook — Janitors and Building Cleaners (Employment Projections)",
+        "link": "https://www.bls.gov/ooh/building-and-grounds-cleaning/janitors-and-building-cleaners.htm",
+        "period": "2025",
+        "checked": "2026-11-09",
         "label": "Proxy",
-        "note": "All janitors and cleaners, not only commercial cleaning."
+        "note": "\"About 2.4 million jobs in 2025.\" Counts janitors and building cleaners in every industry, including in-house staff, so it is broader than contract cleaning firms."
       },
-      "sub": "Janitors & cleaners (BLS 2024)",
+      "sub": "All janitors & cleaners, all industries (BLS 2025)",
       "tone": "positive"
     },
     {
@@ -84,13 +84,14 @@
     "title": "Workforce Segments (US)",
     "centerValue": {
       "value": "2.4M",
-      "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
-      "link": null,
-      "period": "May 2024",
-      "checked": null,
-      "label": "Proxy"
+      "source": "BLS Occupational Outlook Handbook — Janitors and Building Cleaners (Employment Projections)",
+      "link": "https://www.bls.gov/ooh/building-and-grounds-cleaning/janitors-and-building-cleaners.htm",
+      "period": "2025",
+      "checked": "2026-11-09",
+      "label": "Proxy",
+      "note": "\"About 2.4 million jobs in 2025.\" Counts janitors and building cleaners in every industry, including in-house staff, so it is broader than contract cleaning firms."
     },
-    "centerLabel": "US workers",
+    "centerLabel": "US workers, 2025",
     "items": [
       {
         "name": "Domestic / Transitioning",
