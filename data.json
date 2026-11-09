@@ -1727,11 +1727,11 @@
     }
   },
   "compression": {
-    "title": "Labour Compression: Wages vs Contract Prices",
-    "subtitle": "Indexed, 2019 = 100 · BLS median janitor wage vs BLS producer price index for janitorial services",
+    "title": "Labour Compression Test: Wages, Prices and Unit Labour Cost",
+    "subtitle": "Indexed, 2019 = 100 · BLS median janitor wage, BLS producer price index for janitorial services, BLS labour cost per unit of work",
     "baseYear": "2019",
-    "about": "Wages come from the wage chart series (BLS OEWS, May of each year). Prices are annual averages of the monthly BLS producer price index for contract janitorial services, which tracks what cleaning firms charge.",
-    "takeaway": "Since 2019, janitor wages are up 34% while janitorial service prices are up 21% — labour costs have outrun what BSCs can charge. The gap narrowed in 2024–25, when prices rose faster than wages.",
+    "about": "Wages come from the wage chart series (BLS OEWS, May of each year). Prices are annual averages of the monthly BLS producer price index for contract janitorial services, which tracks what cleaning firms charge. Unit labour cost is BLS labour compensation per unit of real output for janitorial firms; it rises only if pay grows faster than output per hour.",
+    "takeaway": "Since 2019, janitor wages are up 34% while the prices cleaning firms charge are up 21%. But output per hour rose too, so labour cost per unit of work rose 10% to 2023 — in line with prices (11% over the same years). Labour’s share of industry output stayed at about 50% from 2019 to 2023. Prices lag wages, but BLS data shows no industry-wide margin squeeze.",
     "takeawayFigures": [
       {
         "value": "34% wage rise 2019–25",
@@ -1746,6 +1746,30 @@
         "source": "BLS Producer Price Index by Industry: Janitorial Services (NAICS 561720) — series PCU561720561720 — derived",
         "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/PCU561720561720",
         "period": "2019 – 2025 annual averages",
+        "checked": "2026-11-09",
+        "label": "Direct"
+      },
+      {
+        "value": "10% unit labour cost rise 2019–23",
+        "source": "BLS Labor Productivity and Costs, Janitorial Services (NAICS 561720) — derived",
+        "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/IPUPN561720U100000000",
+        "period": "2019–2023",
+        "checked": "2026-11-09",
+        "label": "Direct"
+      },
+      {
+        "value": "11% price rise 2019–23",
+        "source": "BLS Producer Price Index, janitorial services (PCU561720561720) — derived",
+        "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/PCU561720561720",
+        "period": "2019–2023 annual averages",
+        "checked": "2026-11-09",
+        "label": "Direct"
+      },
+      {
+        "value": "Labour share 50.2% (2019), 49.8% (2023)",
+        "source": "BLS Labor Productivity and Costs, Janitorial Services (NAICS 561720) — labor compensation (IPUPN561720L020000000) ÷ sectoral output (IPUPN561720T300000000)",
+        "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/IPUPN561720T300000000",
+        "period": "2019, 2023",
         "checked": "2026-11-09",
         "label": "Direct"
       }
@@ -1833,6 +1857,68 @@
           "checked": "2026-11-09",
           "label": "Direct",
           "note": "Index level, not dollars. Annual average of monthly values, calculated from the BLS series."
+        }
+      }
+    ],
+    "unitLabourCost": [
+      {
+        "year": "2019",
+        "value": {
+          "value": 83.662,
+          "source": "BLS Labor Productivity and Costs, Janitorial Services (NAICS 561720) — unit labor costs index (2017 = 100), series IPUPN561720U100000000",
+          "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/IPUPN561720U100000000",
+          "period": "2019",
+          "checked": "2026-11-09",
+          "label": "Direct",
+          "note": "Labour compensation per unit of real output. Published to 2023."
+        }
+      },
+      {
+        "year": "2020",
+        "value": {
+          "value": 84.613,
+          "source": "BLS Labor Productivity and Costs, Janitorial Services (NAICS 561720) — unit labor costs index (2017 = 100), series IPUPN561720U100000000",
+          "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/IPUPN561720U100000000",
+          "period": "2020",
+          "checked": "2026-11-09",
+          "label": "Direct",
+          "note": "Labour compensation per unit of real output. Published to 2023."
+        }
+      },
+      {
+        "year": "2021",
+        "value": {
+          "value": 90.481,
+          "source": "BLS Labor Productivity and Costs, Janitorial Services (NAICS 561720) — unit labor costs index (2017 = 100), series IPUPN561720U100000000",
+          "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/IPUPN561720U100000000",
+          "period": "2021",
+          "checked": "2026-11-09",
+          "label": "Direct",
+          "note": "Labour compensation per unit of real output. Published to 2023."
+        }
+      },
+      {
+        "year": "2022",
+        "value": {
+          "value": 89.952,
+          "source": "BLS Labor Productivity and Costs, Janitorial Services (NAICS 561720) — unit labor costs index (2017 = 100), series IPUPN561720U100000000",
+          "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/IPUPN561720U100000000",
+          "period": "2022",
+          "checked": "2026-11-09",
+          "label": "Direct",
+          "note": "Labour compensation per unit of real output. Published to 2023."
+        }
+      },
+      {
+        "year": "2023",
+        "value": {
+          "value": 92.414,
+          "source": "BLS Labor Productivity and Costs, Janitorial Services (NAICS 561720) — unit labor costs index (2017 = 100), series IPUPN561720U100000000",
+          "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/IPUPN561720U100000000",
+          "period": "2023",
+          "checked": "2026-11-09",
+          "label": "Direct",
+          "note": "Labour compensation per unit of real output. Published to 2023."
         }
       }
     ]
