@@ -472,20 +472,6 @@
         }
       ],
       "tone": "risk"
-    },
-    {
-      "label": "Added Labour Cost (2027)",
-      "value": {
-        "value": "+$4,720",
-        "source": null,
-        "link": null,
-        "period": "2027",
-        "checked": null,
-        "label": "Estimate",
-        "note": "(Projected 2027 median $19.54 − May 2024 median $17.27) × 2,080 hours a year."
-      },
-      "sub": "Per worker vs 2024, at the BLS growth rate",
-      "tone": "neutral"
     }
   ],
   "turnover": {

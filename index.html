@@ -497,6 +497,7 @@ function renderWageChart() {
   html+=`<text x="${lx+10}" y="${H-18}" fill="rgba(250,250,250,0.85)" font-size="10" font-family="Archivo,sans-serif">${D.wages.legend}</text>`;
   svg.innerHTML=html;
 
+  document.getElementById('wage-stats').style.gridTemplateColumns = `repeat(${D.wageStats.length},1fr)`;
   document.getElementById('wage-stats').innerHTML = D.wageStats.map(s=>`
     <div class="stat-card" style="border-top:2px solid ${TONE[s.tone]};">
       <div class="kpi-label">${s.label}</div>
