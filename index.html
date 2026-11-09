@@ -47,6 +47,7 @@
   .panel-dark { background: #233038; }
   .panel-dark .panel-title { color: #FAFAFA; }
   .panel-dark .panel-sub { color: rgba(250,250,250,0.8); }
+  .compression-takeaway { font-size: 12px; line-height: 1.6; color: rgba(250,250,250,0.85); margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(250,250,250,0.15); }
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .stat-card { background: #FAFAFA; border-radius: 12px; padding: 16px; }
@@ -196,6 +197,12 @@
         <svg width="100%" viewBox="0 0 580 200" id="wage-chart" style="overflow:visible;"></svg>
       </div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;" id="wage-stats"></div>
+      <div class="panel panel-dark">
+        <div class="panel-title" id="compression-title">Labour Compression</div>
+        <div class="panel-sub" id="compression-sub"></div>
+        <svg width="100%" viewBox="0 0 580 210" id="compression-chart" style="overflow:visible;" role="img" aria-labelledby="compression-title compression-takeaway"></svg>
+        <div class="compression-takeaway" id="compression-takeaway"></div>
+      </div>
       <div class="insight-box">
         <div class="insight-title">The Minimum Wage Ratchet Effect</div>
         <div class="insight-text">When minimum wages rise, the entire wage structure shifts — not just entry-level pay. Workers with experience push to restore their differential above the new floor. Supervisors push to maintain their premium. A bid priced at today's wages, covering a contract that spans a scheduled minimum wage increase, carries hidden cost exposure that most BSCs do not model.</div>
@@ -498,6 +505,64 @@ function renderWageChart() {
     </div>`).join('');
 }
 
+// ─── LABOUR COMPRESSION CHART ────────────────────────────────────────────────
+// Wages and contract prices, both indexed to the base year = 100. The shaded band is the gap.
+function renderCompressionChart() {
+  const C = D.compression;
+  document.getElementById('compression-title').textContent = C.title;
+  document.getElementById('compression-sub').textContent = C.subtitle;
+  document.getElementById('compression-takeaway').textContent = C.takeaway;
+
+  const wageByYear = Object.fromEntries(D.wages.series.filter(d => !d.projected).map(d => [d.year, val(d.value)]));
+  const rows = C.prices.map(p => ({ year:p.year, price:val(p.value), wage:wageByYear[p.year] })).filter(r => r.wage !== undefined);
+  const base = rows.find(r => r.year === C.baseYear);
+  rows.forEach(r => { r.wi = r.wage / base.wage * 100; r.pi = r.price / base.price * 100; });
+
+  const W=580, H=210, pl=44, pr=104, pt=16, pb=40;
+  const chartW=W-pl-pr, chartH=H-pt-pb;
+  const all=rows.flatMap(r=>[r.wi,r.pi]);
+  const minV=Math.floor(Math.min(...all)/10)*10, maxV=Math.ceil((Math.max(...all)+2)/10)*10;
+  const n=rows.length;
+  const xS=i=>pl+(i/(n-1))*chartW;
+  const yS=v=>pt+(1-(v-minV)/(maxV-minV))*chartH;
+  const font='font-family="Archivo,sans-serif"';
+  let html='';
+  for (let v=minV; v<=maxV; v+=10) {
+    html+=`<line x1="${pl}" x2="${W-pr}" y1="${yS(v)}" y2="${yS(v)}" stroke="rgba(250,250,250,${v===100?0.35:0.15})" stroke-width="1"/>`;
+    html+=`<text x="${pl-6}" y="${yS(v)+4}" text-anchor="end" fill="rgba(250,250,250,0.8)" font-size="10" ${font}>${v}</text>`;
+  }
+  rows.forEach((r,i)=>{
+    html+=`<text x="${xS(i)}" y="${H-22}" text-anchor="middle" fill="rgba(250,250,250,0.8)" font-size="10" ${font}>${r.year}</text>`;
+  });
+  // Gap between the two lines
+  const top=rows.map((r,i)=>`${xS(i)},${yS(r.wi)}`), bottom=rows.map((r,i)=>`${xS(i)},${yS(r.pi)}`).reverse();
+  html+=`<polygon points="${top.concat(bottom).join(' ')}" fill="rgba(230,254,208,0.14)"/>`;
+  const line=(key,color)=>{
+    html+=`<polyline points="${rows.map((r,i)=>`${xS(i)},${yS(r[key])}`).join(' ')}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+    rows.forEach((r,i)=>{ html+=`<circle cx="${xS(i)}" cy="${yS(r[key])}" r="3.5" fill="${color}" stroke="${color}" stroke-width="1.5"/>`; });
+  };
+  line('pi','#B7B2CA');
+  line('wi','#E6FED0');
+  // Direct labels at the right end
+  const last=rows[n-1], ex=xS(n-1)+10;
+  const pct=v=>(v>=100?'+':'')+Math.round(v-100)+'%';
+  let yw=yS(last.wi), yp=yS(last.pi);
+  if (yp-yw<26) { const mid=(yw+yp)/2; yw=mid-13; yp=mid+13; }
+  html+=`<text x="${ex}" y="${yw-2}" fill="#E6FED0" font-size="11" font-weight="700" ${font}>Wages ${pct(last.wi)}</text>`;
+  html+=`<text x="${ex}" y="${yw+11}" fill="rgba(250,250,250,0.7)" font-size="9" ${font}>since ${C.baseYear}</text>`;
+  html+=`<text x="${ex}" y="${yp-2}" fill="#B7B2CA" font-size="11" font-weight="700" ${font}>Prices ${pct(last.pi)}</text>`;
+  html+=`<text x="${ex}" y="${yp+11}" fill="rgba(250,250,250,0.7)" font-size="9" ${font}>since ${C.baseYear}</text>`;
+  // Legend
+  const legend=[{c:'#E6FED0',label:'Median janitor wage (BLS OEWS)'},{c:'#B7B2CA',label:'Janitorial services prices (BLS PPI)'}];
+  let lx=pl+10;
+  legend.forEach(li=>{
+    html+=`<circle cx="${lx}" cy="${H-4}" r="4" fill="${li.c}"/>`;
+    html+=`<text x="${lx+10}" y="${H}" fill="rgba(250,250,250,0.85)" font-size="10" ${font}>${li.label}</text>`;
+    lx+=li.label.length*5.6+28;
+  });
+  document.getElementById('compression-chart').innerHTML=html;
+}
+
 // ─── TURNOVER ────────────────────────────────────────────────────────────────
 function updateCalc() {
   const T = D.turnover;
@@ -753,6 +818,7 @@ function renderAll() {
   renderDonut();
   renderSignals();
   renderWageChart();
+  renderCompressionChart();
   renderReasons();
   renderLoop();
   renderMarkets();

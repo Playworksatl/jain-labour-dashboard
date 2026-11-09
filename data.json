@@ -1712,5 +1712,116 @@
       "step": 0.5,
       "value": 23
     }
+  },
+  "compression": {
+    "title": "Labour Compression: Wages vs Contract Prices",
+    "subtitle": "Indexed, 2019 = 100 · BLS median janitor wage vs BLS producer price index for janitorial services",
+    "baseYear": "2019",
+    "about": "Wages come from the wage chart series (BLS OEWS, May of each year). Prices are annual averages of the monthly BLS producer price index for contract janitorial services, which tracks what cleaning firms charge.",
+    "takeaway": "Since 2019, janitor wages are up 34% while janitorial service prices are up 21% — labour costs have outrun what BSCs can charge. The gap narrowed in 2024–25, when prices rose faster than wages.",
+    "takeawayFigures": [
+      {
+        "value": "34% wage rise 2019–25",
+        "source": "BLS OEWS, SOC 37-2011 — derived",
+        "link": null,
+        "period": "May 2019 – May 2025",
+        "checked": "2026-11-09",
+        "label": "Proxy"
+      },
+      {
+        "value": "21% price rise 2019–25",
+        "source": "BLS Producer Price Index by Industry: Janitorial Services (NAICS 561720) — series PCU561720561720 — derived",
+        "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/PCU561720561720",
+        "period": "2019 – 2025 annual averages",
+        "checked": "2026-11-09",
+        "label": "Direct"
+      }
+    ],
+    "prices": [
+      {
+        "year": "2019",
+        "value": {
+          "value": 145.0,
+          "source": "BLS Producer Price Index by Industry: Janitorial Services (NAICS 561720) — series PCU561720561720",
+          "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/PCU561720561720",
+          "period": "2019 annual average (12 months)",
+          "checked": "2026-11-09",
+          "label": "Direct",
+          "note": "Index level, not dollars. Annual average of monthly values, calculated from the BLS series."
+        }
+      },
+      {
+        "year": "2020",
+        "value": {
+          "value": 145.7,
+          "source": "BLS Producer Price Index by Industry: Janitorial Services (NAICS 561720) — series PCU561720561720",
+          "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/PCU561720561720",
+          "period": "2020 annual average (12 months)",
+          "checked": "2026-11-09",
+          "label": "Direct",
+          "note": "Index level, not dollars. Annual average of monthly values, calculated from the BLS series."
+        }
+      },
+      {
+        "year": "2021",
+        "value": {
+          "value": 148.0,
+          "source": "BLS Producer Price Index by Industry: Janitorial Services (NAICS 561720) — series PCU561720561720",
+          "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/PCU561720561720",
+          "period": "2021 annual average (12 months)",
+          "checked": "2026-11-09",
+          "label": "Direct",
+          "note": "Index level, not dollars. Annual average of monthly values, calculated from the BLS series."
+        }
+      },
+      {
+        "year": "2022",
+        "value": {
+          "value": 158.7,
+          "source": "BLS Producer Price Index by Industry: Janitorial Services (NAICS 561720) — series PCU561720561720",
+          "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/PCU561720561720",
+          "period": "2022 annual average (12 months)",
+          "checked": "2026-11-09",
+          "label": "Direct",
+          "note": "Index level, not dollars. Annual average of monthly values, calculated from the BLS series."
+        }
+      },
+      {
+        "year": "2023",
+        "value": {
+          "value": 161.4,
+          "source": "BLS Producer Price Index by Industry: Janitorial Services (NAICS 561720) — series PCU561720561720",
+          "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/PCU561720561720",
+          "period": "2023 annual average (12 months)",
+          "checked": "2026-11-09",
+          "label": "Direct",
+          "note": "Index level, not dollars. Annual average of monthly values, calculated from the BLS series."
+        }
+      },
+      {
+        "year": "2024",
+        "value": {
+          "value": 166.9,
+          "source": "BLS Producer Price Index by Industry: Janitorial Services (NAICS 561720) — series PCU561720561720",
+          "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/PCU561720561720",
+          "period": "2024 annual average (12 months)",
+          "checked": "2026-11-09",
+          "label": "Direct",
+          "note": "Index level, not dollars. Annual average of monthly values, calculated from the BLS series."
+        }
+      },
+      {
+        "year": "2025",
+        "value": {
+          "value": 175.8,
+          "source": "BLS Producer Price Index by Industry: Janitorial Services (NAICS 561720) — series PCU561720561720",
+          "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/PCU561720561720",
+          "period": "2025 annual average (12 months)",
+          "checked": "2026-11-09",
+          "label": "Direct",
+          "note": "Index level, not dollars. Annual average of monthly values, calculated from the BLS series."
+        }
+      }
+    ]
   }
 }
