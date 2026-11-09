@@ -159,24 +159,24 @@
     {
       "label": "Wage Growth Rate",
       "value": {
-        "value": "+4.2%/yr",
-        "source": null,
+        "value": "+5.0%/yr",
+        "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners — derived",
         "link": null,
-        "period": null,
-        "checked": null,
-        "label": "Estimate",
-        "note": "Source not recorded on the dashboard"
+        "period": "May 2019 – May 2025",
+        "checked": "2026-11-09",
+        "label": "Proxy",
+        "note": "Average yearly rise in the BLS median, $13.19 (2019) to $17.71 (2025) = 5.03% a year. Latest single year (2024–25): +2.5%."
       },
-      "sub": "US national; some states +6.9%",
+      "sub": "BLS median, 2019–25 average; +2.5% in 2024–25",
       "subFigures": [
         {
-          "value": "+6.9% (some states)",
-          "source": null,
+          "value": "+2.5% (2024–25)",
+          "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners — derived",
           "link": null,
-          "period": null,
-          "checked": null,
-          "label": "Estimate",
-          "note": "Source not recorded on the dashboard"
+          "period": "May 2024 – May 2025",
+          "checked": "2026-11-09",
+          "label": "Proxy",
+          "note": "$17.27 to $17.71."
         }
       ],
       "severity": "medium"
@@ -256,65 +256,65 @@
       {
         "year": "2019",
         "value": {
-          "value": 14.2,
+          "value": 13.19,
           "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
-          "link": null,
+          "link": "https://www.bls.gov/oes/2019/may/oes372011.htm",
           "period": "May 2019",
-          "checked": null,
+          "checked": "2026-11-09",
           "label": "Proxy",
-          "note": "Median for all janitors and cleaners, used for commercial cleaning."
+          "note": "National median hourly wage. All janitors and cleaners, used for commercial cleaning."
         },
         "projected": false
       },
       {
         "year": "2020",
         "value": {
-          "value": 14.65,
+          "value": 13.98,
           "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
-          "link": null,
+          "link": "https://www.bls.gov/oes/2020/may/oes372011.htm",
           "period": "May 2020",
-          "checked": null,
+          "checked": "2026-11-09",
           "label": "Proxy",
-          "note": "Median for all janitors and cleaners, used for commercial cleaning."
+          "note": "National median hourly wage. All janitors and cleaners, used for commercial cleaning."
         },
         "projected": false
       },
       {
         "year": "2021",
         "value": {
-          "value": 15.1,
+          "value": 14.31,
           "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
-          "link": null,
+          "link": "https://www.bls.gov/oes/2021/may/oes372011.htm",
           "period": "May 2021",
-          "checked": null,
+          "checked": "2026-11-09",
           "label": "Proxy",
-          "note": "Median for all janitors and cleaners, used for commercial cleaning."
+          "note": "National median hourly wage. All janitors and cleaners, used for commercial cleaning."
         },
         "projected": false
       },
       {
         "year": "2022",
         "value": {
-          "value": 15.8,
+          "value": 15.38,
           "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
-          "link": null,
+          "link": "https://www.bls.gov/oes/2022/may/oes372011.htm",
           "period": "May 2022",
-          "checked": null,
+          "checked": "2026-11-09",
           "label": "Proxy",
-          "note": "Median for all janitors and cleaners, used for commercial cleaning."
+          "note": "National median hourly wage. All janitors and cleaners, used for commercial cleaning."
         },
         "projected": false
       },
       {
         "year": "2023",
         "value": {
-          "value": 16.55,
+          "value": 16.84,
           "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
-          "link": null,
+          "link": "https://www.bls.gov/oes/2023/may/oes372011.htm",
           "period": "May 2023",
-          "checked": null,
+          "checked": "2026-11-09",
           "label": "Proxy",
-          "note": "Median for all janitors and cleaners, used for commercial cleaning."
+          "note": "National median hourly wage. All janitors and cleaners, used for commercial cleaning."
         },
         "projected": false
       },
@@ -323,11 +323,11 @@
         "value": {
           "value": 17.27,
           "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
-          "link": null,
+          "link": "https://www.bls.gov/oes/2024/may/oes372011.htm",
           "period": "May 2024",
           "checked": null,
           "label": "Proxy",
-          "note": "Median for all janitors and cleaners, used for commercial cleaning."
+          "note": "$17.27 for May 2024, as reported by the BLS Occupational Outlook Handbook (2024 edition) and OEWS mirrors; the BLS 2024 table could not be read directly, so not marked as checked."
         },
         "projected": false
       },
@@ -347,26 +347,26 @@
       {
         "year": "2026",
         "value": {
-          "value": 18.45,
+          "value": 18.6,
           "source": null,
           "link": null,
           "period": "2026",
           "checked": null,
           "label": "Estimate",
-          "note": "Projection: +4.2% a year from the May 2025 BLS median ($17.71)."
+          "note": "Projection: the May 2025 BLS median ($17.71) grown at the BLS 2019–25 average of 5.03% a year."
         },
         "projected": true
       },
       {
         "year": "2027",
         "value": {
-          "value": 19.23,
+          "value": 19.54,
           "source": null,
           "link": null,
           "period": "2027",
           "checked": null,
           "label": "Estimate",
-          "note": "Projection: +4.2% a year from the May 2025 BLS median ($17.71)."
+          "note": "Projection: the May 2025 BLS median ($17.71) grown at the BLS 2019–25 average of 5.03% a year."
         },
         "projected": true
       }
@@ -390,33 +390,33 @@
     {
       "label": "US Wage Growth Rate",
       "value": {
-        "value": "+4.2%/yr",
-        "source": null,
+        "value": "+5.0%/yr",
+        "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners — derived",
         "link": null,
-        "period": null,
-        "checked": null,
-        "label": "Estimate",
-        "note": "Source not recorded on the dashboard"
+        "period": "May 2019 – May 2025",
+        "checked": "2026-11-09",
+        "label": "Proxy",
+        "note": "Average yearly rise in the BLS median, $13.19 (2019) to $17.71 (2025) = 5.03% a year. Latest single year (2024–25): +2.5%."
       },
-      "sub": "National avg · Arizona +6.9% · projected $19.23 by 2027",
+      "sub": "BLS avg 2019–25 · +2.5% in 2024–25 · projected $19.54 by 2027",
       "subFigures": [
         {
-          "value": "Arizona +6.9%",
-          "source": null,
+          "value": "+2.5% (2024–25)",
+          "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners — derived",
           "link": null,
-          "period": null,
-          "checked": null,
-          "label": "Estimate",
-          "note": "Source not recorded on the dashboard"
+          "period": "May 2024 – May 2025",
+          "checked": "2026-11-09",
+          "label": "Proxy",
+          "note": "$17.27 to $17.71."
         },
         {
-          "value": "$19.23 by 2027",
+          "value": "$19.54 by 2027",
           "source": null,
           "link": null,
           "period": "2027",
           "checked": null,
           "label": "Estimate",
-          "note": "Projection: +4.2% a year from the May 2025 BLS median."
+          "note": "Projection at the BLS 2019–25 average growth rate."
         }
       ],
       "tone": "positive"
@@ -449,15 +449,15 @@
     {
       "label": "Added Labour Cost (2027)",
       "value": {
-        "value": "+$5,200",
+        "value": "+$4,720",
         "source": null,
         "link": null,
         "period": "2027",
         "checked": null,
         "label": "Estimate",
-        "note": "Derived from projected wage growth."
+        "note": "(Projected 2027 median $19.54 − May 2024 median $17.27) × 2,080 hours a year."
       },
-      "sub": "Per worker vs 2024 baseline at current growth rate",
+      "sub": "Per worker vs 2024, at the BLS growth rate",
       "tone": "neutral"
     }
   ],
@@ -703,13 +703,13 @@
       },
       {
         "stat": {
-          "value": "4.2%",
-          "source": null,
+          "value": "5.0%",
+          "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners — derived",
           "link": null,
-          "period": null,
-          "checked": null,
-          "label": "Estimate",
-          "note": "Source not recorded on the dashboard"
+          "period": "May 2019 – May 2025",
+          "checked": "2026-11-09",
+          "label": "Proxy",
+          "note": "Average yearly rise in the BLS median, $13.19 (2019) to $17.71 (2025) = 5.03% a year. Latest single year (2024–25): +2.5%."
         },
         "label": "Annual wage growth outpacing most bids"
       }
@@ -1619,7 +1619,7 @@
       }
     ],
     "insight": {
-      "fleetHtml": "A BSC that builds a fleet of 3–5 autonomous scrubbers across their contract portfolio creates a compounding competitive advantage. The machine cost is fixed. The labour cost it replaces grows at 4.2%/yr. Every year the machine operates, the margin advantage widens.",
+      "fleetHtml": "A BSC that builds a fleet of 3–5 autonomous scrubbers across their contract portfolio creates a compounding competitive advantage. The machine cost is fixed. The labour cost it replaces grows at 5.0%/yr. Every year the machine operates, the margin advantage widens.",
       "fleetFigures": [
         {
           "value": "3–5 scrubbers",
@@ -1631,13 +1631,13 @@
           "note": "Illustrative fleet size."
         },
         {
-          "value": "4.2%/yr labour cost growth",
-          "source": null,
+          "value": "5.0%/yr labour cost growth",
+          "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners — derived",
           "link": null,
-          "period": null,
-          "checked": null,
-          "label": "Estimate",
-          "note": "Source not recorded on the dashboard"
+          "period": "May 2019 – May 2025",
+          "checked": "2026-11-09",
+          "label": "Proxy",
+          "note": "Average yearly rise in the BLS median, $13.19 (2019) to $17.71 (2025) = 5.03% a year. Latest single year (2024–25): +2.5%."
         }
       ],
       "watchHtml": "SoftBank Robotics America launched <strong style=\"color:#191919;\">SoftBank Robotics Connect</strong> in June 2025 — a fleet management platform giving BSCs visibility across heterogeneous machine fleets from a single dashboard. Their Flagship Facility Services partnership deployed ~100 machines across 15 locations in six months. Connect tracks robot performance and cleaning SOP compliance. This is adjacent to Jain's bid intelligence layer — approaching the same problem from the machine side rather than the labour economics side. Worth monitoring as a potential integration partner or distribution channel.",

@@ -468,7 +468,7 @@ function renderWageChart() {
   const yS=v=>pt+(1-(v-minV)/(maxV-minV))*chartH;
   const splitIdx=wages.findIndex(d=>d.proj)-1;
   let html='';
-  [14,16,18,20,22].filter(v=>v>=minV&&v<=maxV).forEach(v=>{
+  [12,14,16,18,20,22].filter(v=>v>=minV&&v<=maxV).forEach(v=>{
     html+=`<line x1="${pl}" x2="${W-pr}" y1="${yS(v)}" y2="${yS(v)}" stroke="rgba(250,250,250,0.15)" stroke-width="1"/>`;
     html+=`<text x="${pl-6}" y="${yS(v)+4}" text-anchor="end" fill="rgba(250,250,250,0.8)" font-size="10" font-family="Archivo,sans-serif">$${v}</text>`;
   });
