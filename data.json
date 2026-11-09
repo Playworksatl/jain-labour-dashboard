@@ -43,15 +43,15 @@
     {
       "label": "Annual Openings",
       "value": {
-        "value": "351K",
-        "source": null,
-        "link": null,
-        "period": null,
-        "checked": null,
-        "label": "Estimate",
-        "note": "Source not recorded on the dashboard"
+        "value": "322K",
+        "source": "BLS Occupational Outlook Handbook — Janitors and Building Cleaners (Employment Projections)",
+        "link": "https://www.bls.gov/ooh/building-and-grounds-cleaning/janitors-and-building-cleaners.htm",
+        "period": "2025–35 (average per year)",
+        "checked": "2026-11-09",
+        "label": "Proxy",
+        "note": "\"About 321,800 openings ... projected each year, on average, over the decade.\" All janitors and building cleaners, every industry."
       },
-      "sub": "Replacement demand · not growth",
+      "sub": "Per year, 2025–35 projection · mostly replacement",
       "tone": "neutral"
     },
     {
@@ -334,39 +334,39 @@
       {
         "year": "2025",
         "value": {
-          "value": 17.99,
-          "source": null,
-          "link": null,
-          "period": "2025",
-          "checked": null,
-          "label": "Estimate",
-          "note": "Projection; method not recorded (close to +4.2% a year from 2024)."
+          "value": 17.71,
+          "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners — series OEUN000000000000037201108",
+          "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/OEUN000000000000037201108",
+          "period": "May 2025",
+          "checked": "2026-11-09",
+          "label": "Proxy",
+          "note": "National median hourly wage, May 2025 ($17.71). All janitors and cleaners, used for commercial cleaning."
         },
-        "projected": true
+        "projected": false
       },
       {
         "year": "2026",
         "value": {
-          "value": 18.75,
+          "value": 18.45,
           "source": null,
           "link": null,
           "period": "2026",
           "checked": null,
           "label": "Estimate",
-          "note": "Projection; method not recorded (close to +4.2% a year from 2024)."
+          "note": "Projection: +4.2% a year from the May 2025 BLS median ($17.71)."
         },
         "projected": true
       },
       {
         "year": "2027",
         "value": {
-          "value": 19.6,
+          "value": 19.23,
           "source": null,
           "link": null,
           "period": "2027",
           "checked": null,
           "label": "Estimate",
-          "note": "Projection; method not recorded (close to +4.2% a year from 2024)."
+          "note": "Projection: +4.2% a year from the May 2025 BLS median ($17.71)."
         },
         "projected": true
       }
@@ -374,16 +374,17 @@
   },
   "wageStats": [
     {
-      "label": "US Median Wage (2024)",
+      "label": "US Median Wage (2025)",
       "value": {
-        "value": "$17.27/hr",
-        "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
-        "link": null,
-        "period": "May 2024",
-        "checked": null,
-        "label": "Proxy"
+        "value": "$17.71/hr",
+        "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners — series OEUN000000000000037201108",
+        "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/OEUN000000000000037201108",
+        "period": "May 2025",
+        "checked": "2026-11-09",
+        "label": "Proxy",
+        "note": "National median hourly wage, May 2025 ($17.71). All janitors and cleaners, used for commercial cleaning."
       },
-      "sub": "SOC 37-2011 · BLS OES May 2024",
+      "sub": "SOC 37-2011 · BLS OES May 2025",
       "tone": "positive"
     },
     {
@@ -397,7 +398,7 @@
         "label": "Estimate",
         "note": "Source not recorded on the dashboard"
       },
-      "sub": "National avg · Arizona +6.9% · projected $19.60 by 2027",
+      "sub": "National avg · Arizona +6.9% · projected $19.23 by 2027",
       "subFigures": [
         {
           "value": "Arizona +6.9%",
@@ -409,13 +410,13 @@
           "note": "Source not recorded on the dashboard"
         },
         {
-          "value": "$19.60 by 2027",
+          "value": "$19.23 by 2027",
           "source": null,
           "link": null,
           "period": "2027",
           "checked": null,
           "label": "Estimate",
-          "note": "Projection."
+          "note": "Projection: +4.2% a year from the May 2025 BLS median."
         }
       ],
       "tone": "positive"
@@ -471,13 +472,13 @@
       "note": "Shown as \"Industry reference (operator surveys)\". An industry-wide rate standing in for any one operator; users can enter their own rate in the turnover calculator."
     },
     "wageForRevenue": {
-      "value": 17.27,
-      "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners",
-      "link": null,
-      "period": "May 2024",
-      "checked": null,
+      "value": 17.71,
+      "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners — series OEUN000000000000037201108",
+      "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/OEUN000000000000037201108",
+      "period": "May 2025",
+      "checked": "2026-11-09",
       "label": "Proxy",
-      "note": "Hourly wage used to estimate labour revenue in \"% of Labour Revenue\"."
+      "note": "Hourly wage used to estimate labour revenue in \"% of Labour Revenue\". BLS national median, May 2025."
     },
     "hoursPerYear": {
       "value": 2080,
