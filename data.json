@@ -10,21 +10,48 @@
     "countryName": "United States",
     "headerSub": "United States · 2024–2027 · Updated November 2026",
     "specsTitle": "Machine Specifications — 2026 Reference",
-    "footerSources": "Sources: US Census Bureau (2022 Economic Census), BLS OES, SEIU 32BJ, BSCAI, Aspire, National Immigration Forum, Operator surveys, Sproutmation, Tennant, Avidbots, Kärcher, SoftBank Robotics America, Grand View Research · May 2026; market size and machine prices updated November 2026"
+    "footerSources": "Sources: US Census Bureau (2022 Economic Census), BLS OES, BLS QCEW, BLS PPI, SEIU 32BJ, BSCAI, Aspire, National Immigration Forum, Operator surveys, Sproutmation, Tennant, Avidbots, Kärcher, SoftBank Robotics America, Grand View Research · May 2026; market size and machine prices updated November 2026"
   },
   "kpis": [
     {
       "label": "US Market Size",
       "value": {
-        "value": "$72.6B",
-        "source": "US Census Bureau, 2022 Economic Census — NAICS 561720 Janitorial Services (US)",
-        "link": null,
-        "period": "2022",
-        "checked": null,
-        "label": "Direct"
+        "value": "~$82B",
+        "label": "Estimate",
+        "source": "BLS Quarterly Census of Employment and Wages (QCEW), NAICS 561720 private payroll 2025 ($36.85B), scaled by the 2022 Economic Census revenue-to-payroll ratio (2.21)",
+        "link": "https://data.bls.gov/cew/data/api/2025/a/industry/561720.csv",
+        "period": "2025",
+        "checked": "2026-11-09",
+        "note": "$36.85B × ($72.6B ÷ $32.80B) = $81.6B. Ratios from 2018–22 give $79.2B–$81.9B; growing the 2022 Census figure by the BLS janitorial price index gives $80.4B. Employer firms only; excludes self-employed cleaners."
       },
-      "sub": "Janitorial firms (NAICS 561720) · 2022 Census",
-      "tone": "positive"
+      "sub": "2025 estimate · $72.6B in 2022 Census",
+      "tone": "positive",
+      "subFigures": [
+        {
+          "value": "$72.6B",
+          "source": "US Census Bureau, 2022 Economic Census — NAICS 561720 Janitorial Services (US)",
+          "link": null,
+          "period": "2022",
+          "checked": null,
+          "label": "Direct"
+        },
+        {
+          "value": "$36.85B payroll, 2025",
+          "source": "BLS QCEW, NAICS 561720, private ownership, annual average",
+          "link": "https://data.bls.gov/cew/data/api/2025/a/industry/561720.csv",
+          "period": "2025",
+          "checked": "2026-11-09",
+          "label": "Direct"
+        },
+        {
+          "value": "$32.80B payroll, 2022",
+          "source": "BLS QCEW, NAICS 561720, private ownership, annual average",
+          "link": "https://data.bls.gov/cew/data/api/2022/a/industry/561720.csv",
+          "period": "2022",
+          "checked": "2026-11-09",
+          "label": "Direct"
+        }
+      ]
     },
     {
       "label": "Workers Employed",
