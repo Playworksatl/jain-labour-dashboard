@@ -10,7 +10,7 @@
     "countryName": "United States",
     "headerSub": "United States · 2024–2027 · Updated November 2026",
     "specsTitle": "Machine Specifications — 2026 Reference",
-    "footerSources": "Sources: US Census Bureau (2022 Economic Census), BLS OES, BLS QCEW, BLS PPI, SEIU 32BJ, BSCAI, Aspire, National Immigration Forum, Operator surveys, Sproutmation, Tennant, Avidbots, Kärcher, SoftBank Robotics America, Grand View Research · May 2026; market size and machine prices updated November 2026"
+    "footerSources": "Sources: US Census Bureau (2022 Economic Census), BLS OES, BLS QCEW, BLS PPI, SEIU 32BJ, BSCAI, Aspire, Operator surveys, Sproutmation, Tennant, Avidbots, Kärcher, SoftBank Robotics America, Grand View Research · May 2026; market size and machine prices updated November 2026"
   },
   "kpis": [
     {
@@ -107,81 +107,6 @@
       "tone": "risk"
     }
   ],
-  "segments": {
-    "title": "Workforce Segments (US)",
-    "centerValue": {
-      "value": "2.21M",
-      "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners — series OEUN000000000000037201101",
-      "link": "https://api.bls.gov/publicAPI/v1/timeseries/data/OEUN000000000000037201101",
-      "period": "May 2025",
-      "checked": "2026-11-09",
-      "label": "Proxy",
-      "note": "2,209,760 jobs, May 2025. Same BLS series and occupation code as the median wage. Covers all industries, including in-house staff, so it is broader than contract cleaning firms."
-    },
-    "centerLabel": "US workers, 2025",
-    "items": [
-      {
-        "name": "Domestic / Transitioning",
-        "pct": {
-          "value": 32,
-          "source": null,
-          "link": null,
-          "period": null,
-          "checked": null,
-          "label": "Estimate",
-          "note": "Source not recorded on the dashboard"
-        }
-      },
-      {
-        "name": "Documented Immigrants",
-        "pct": {
-          "value": 28,
-          "source": null,
-          "link": null,
-          "period": null,
-          "checked": null,
-          "label": "Estimate",
-          "note": "Source not recorded on the dashboard"
-        }
-      },
-      {
-        "name": "Part-Time / Second Job",
-        "pct": {
-          "value": 22,
-          "source": null,
-          "link": null,
-          "period": null,
-          "checked": null,
-          "label": "Estimate",
-          "note": "Source not recorded on the dashboard"
-        }
-      },
-      {
-        "name": "Refugees & New Arrivals",
-        "pct": {
-          "value": 10,
-          "source": null,
-          "link": null,
-          "period": null,
-          "checked": null,
-          "label": "Estimate",
-          "note": "Source not recorded on the dashboard"
-        }
-      },
-      {
-        "name": "Undocumented (US)",
-        "pct": {
-          "value": 5,
-          "source": null,
-          "link": null,
-          "period": null,
-          "checked": null,
-          "label": "Estimate",
-          "note": "Source not recorded on the dashboard"
-        }
-      }
-    ]
-  },
   "signals": [
     {
       "label": "Wage Growth Rate",
@@ -232,34 +157,6 @@
         }
       ],
       "severity": "high"
-    },
-    {
-      "label": "Labour Force Loss (US H1 2025)",
-      "value": {
-        "value": "1.2M",
-        "source": null,
-        "link": null,
-        "period": "H1 2025",
-        "checked": null,
-        "label": "Estimate",
-        "note": "Source not recorded on the dashboard"
-      },
-      "sub": "Foreign-born workers left due to enforcement",
-      "severity": "high"
-    },
-    {
-      "label": "AI Bidding Adoption",
-      "value": {
-        "value": "<5%",
-        "source": null,
-        "link": null,
-        "period": null,
-        "checked": null,
-        "label": "Estimate",
-        "note": "Source not recorded on the dashboard"
-      },
-      "sub": "BSCs using AI for bid modelling — Jain's white space",
-      "severity": "opportunity"
     },
     {
       "label": "IoT Investment (BSCs)",
@@ -675,56 +572,6 @@
           "label": "Estimate",
           "note": "Source not recorded on the dashboard"
         }
-      }
-    ],
-    "whyJain": [
-      {
-        "stat": {
-          "value": "<5%",
-          "source": null,
-          "link": null,
-          "period": null,
-          "checked": null,
-          "label": "Estimate",
-          "note": "Source not recorded on the dashboard"
-        },
-        "label": "BSCs using AI for bid modelling"
-      },
-      {
-        "stat": {
-          "value": "62%",
-          "source": null,
-          "link": null,
-          "period": null,
-          "checked": null,
-          "label": "Estimate",
-          "note": "Source not recorded on the dashboard"
-        },
-        "label": "BSCs investing in IoT tools"
-      },
-      {
-        "stat": {
-          "value": "$400K",
-          "source": null,
-          "link": null,
-          "period": null,
-          "checked": null,
-          "label": "Estimate",
-          "note": "Derived: 200% turnover × $2,000 per replacement × 100 workers."
-        },
-        "label": "Hidden turnover cost on 100-person team"
-      },
-      {
-        "stat": {
-          "value": "5.0%",
-          "source": "BLS Occupational Employment and Wage Statistics (OEWS), SOC 37-2011 Janitors and Cleaners — derived",
-          "link": null,
-          "period": "May 2019 – May 2025",
-          "checked": "2026-11-09",
-          "label": "Proxy",
-          "note": "Average yearly rise in the BLS median, $13.19 (2019) to $17.71 (2025) = 5.03% a year. Latest single year (2024–25): +2.5%."
-        },
-        "label": "Annual wage growth outpacing most bids"
       }
     ]
   },
@@ -1651,45 +1498,6 @@
           "checked": "2026-11-09",
           "label": "Proxy",
           "note": "Average yearly rise in the BLS median, $13.19 (2019) to $17.71 (2025) = 5.03% a year. Latest single year (2024–25): +2.5%."
-        }
-      ],
-      "watchHtml": "SoftBank Robotics America launched <strong style=\"color:#191919;\">SoftBank Robotics Connect</strong> in June 2025 — a fleet management platform giving BSCs visibility across heterogeneous machine fleets from a single dashboard. Their Flagship Facility Services partnership deployed ~100 machines across 15 locations in six months. Connect tracks robot performance and cleaning SOP compliance. This is adjacent to Jain's bid intelligence layer — approaching the same problem from the machine side rather than the labour economics side. Worth monitoring as a potential integration partner or distribution channel.",
-      "watchFigures": [
-        {
-          "value": "Launched June 2025",
-          "source": null,
-          "link": null,
-          "period": "June 2025",
-          "checked": null,
-          "label": "Estimate",
-          "note": "Source not recorded on the dashboard"
-        },
-        {
-          "value": "~100 machines",
-          "source": null,
-          "link": null,
-          "period": null,
-          "checked": null,
-          "label": "Estimate",
-          "note": "Source not recorded on the dashboard"
-        },
-        {
-          "value": "15 locations",
-          "source": null,
-          "link": null,
-          "period": null,
-          "checked": null,
-          "label": "Estimate",
-          "note": "Source not recorded on the dashboard"
-        },
-        {
-          "value": "six months",
-          "source": null,
-          "link": null,
-          "period": null,
-          "checked": null,
-          "label": "Estimate",
-          "note": "Source not recorded on the dashboard"
         }
       ]
     }
