@@ -185,7 +185,7 @@
       <div class="panel panel-dark">
         <div class="panel-title" id="compression-title">Labor Compression</div>
         <div class="panel-sub" id="compression-sub"></div>
-        <svg width="100%" viewBox="0 0 580 236" id="compression-chart" style="overflow:visible;" role="img" aria-labelledby="compression-title compression-takeaway"></svg>
+        <svg width="100%" viewBox="0 0 580 218" id="compression-chart" style="overflow:visible;" role="img" aria-labelledby="compression-title compression-takeaway"></svg>
         <div class="compression-takeaway" id="compression-takeaway"></div>
       </div>
       <div class="insight-box">
@@ -468,7 +468,7 @@ function renderCompressionChart() {
   ].map(sr => ({ ...sr, pts: years.map((y,i) => ({ i, y, v: idx(sr.by, y) })).filter(p => p.v !== null) }))
    .filter(sr => sr.pts.length > 1);
 
-  const W=580, H=236, pl=44, pr=140, pt=16, pb=66;
+  const W=580, H=218, pl=44, pr=140, pt=16, pb=48;
   const chartW=W-pl-pr, chartH=H-pt-pb;
   const all=series.flatMap(sr=>sr.pts.map(p=>p.v));
   const minV=Math.floor(Math.min(...all)/10)*10, maxV=Math.ceil((Math.max(...all)+2)/10)*10;
