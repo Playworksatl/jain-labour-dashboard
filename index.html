@@ -558,7 +558,7 @@ function renderLoop() {
 // ─── MARKETS ─────────────────────────────────────────────────────────────────
 function renderMarkets() {
   const cities = D.markets.cities.map(m => ({ city:m.city, wage:val(m.wage), union:val(m.union), risk:val(m.risk) }));
-  const cols = cities.length <= 3 ? cities.length : 3;
+  const cols = cities.length === 4 ? 2 : Math.min(cities.length, 3); // four cities sit in a 2 × 2 grid
   document.getElementById('market-cards-wrap').innerHTML =
     `<div style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:12px;">` +
     cities.map(m=>`
